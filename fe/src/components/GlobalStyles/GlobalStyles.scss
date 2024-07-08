@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+html{
+    font-size: 62.5%;
+}
+/* Xóa các cài đặt mặc định của thẻ ul, li, và input */
+ul {
+    list-style-type: none; /* Xóa dấu đầu dòng của ul */
+    margin: 0;             /* Xóa margin mặc định */
+    padding: 0;            /* Xóa padding mặc định */
+  }
+  
+  li {
+    list-style-type: none; /* Xóa dấu đầu dòng của li */
+    margin: 0;             /* Xóa margin mặc định */
+    padding: 0;            /* Xóa padding mặc định */
+  }
+  
+  // input {
+  //   border: none;          /* Xóa border mặc định */
+  //   outline: none;         /* Xóa outline mặc định */
+  //   padding: 0;            /* Xóa padding mặc định */
+  //   margin: 0;             /* Xóa margin mặc định */
+  //   -webkit-appearance: none; /* Xóa các kiểu mặc định trên trình duyệt WebKit */
+  //   -moz-appearance: none;    /* Xóa các kiểu mặc định trên Firefox */
+  //   appearance: none;         /* Xóa các kiểu mặc định */
+  // }
+  
+  /* Đảm bảo các input không nhận style mặc định khi được focus */
+  input:focus {
+    outline: none;
+  }
+  button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  img{
+    width: 100%;
+  height: 100%;
+  object-fit: cover;
+  }
+  

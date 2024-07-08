@@ -22,11 +22,11 @@ function Login() {
       // Xử lý logic đăng nhập ở đây
 
       if (response.data.success) {
-        // Lưu token vào localStorage hoặc state
-        // Chuyển hướng người dùng đến trang chính
-        localStorage.setItem("username", email);
+        //Thực hiện code khi đăng nhập điều hướng
+        localStorage.setItem("username", email); // Lưu tên người dùng đã đăng nhập toàn cục
         alert("Đănh nhập thành công!");
       } else {
+        //Thực hiện code khi đăng nhập không hợp lệ
         alert(response.data.msg);
       }
     } catch (error) {
@@ -140,7 +140,7 @@ function Login() {
           >
             <input
               className="sm:text-3xl text-2xl"
-              type="text"
+              type="password"
               placeholder="Mật khẩu"
               value={password || ""}
               onChange={(e) => setPassword(e.target.value)}

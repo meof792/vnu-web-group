@@ -4,40 +4,35 @@ import classNames from "classnames";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
-
+import axios from "axios";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [acceptTerms, setAcceptTerms] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showName, setShowName] = useState(false);
-  const [error, setError] = useState("");
 
   useEffect(() => {}, [acceptTerms]);
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    setShowPassword(false);
-    setShowName(false);
-    setError("");
-    if (email === "") {
-      setShowName(true);
-      setError("Vui lòng nhập tài khoản");
-    } else if (email.length !== 8 || !/^\d+$/.test(email)) {
-      setShowName(true);
-      setError("vui lòng nhập mã sinh viên VNU");
-    } else if (password === "") {
-      setShowPassword(true);
-      setError("Vui lòng nhập mật khẩu");
-    } else if (password.length < 9) {
-      setShowPassword(true);
-      setError("Mật khẩu của bạn không đúng");
-    } else if (!acceptTerms) {
-      alert("Vui lòng Click để xác nhận bạn là sinh viên VNU");
-    } else {
-      console.log("Đăng nhập thành công");
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/api/login", {
+        username: email,
+        password: password,
+      });
+
+      // Xử lý logic đăng nhập ở đây
+
+      if (response.data.success) {
+        // Lưu token vào localStorage hoặc state
+        // Chuyển hướng người dùng đến trang chính
+        localStorage.setItem("username", email);
+        alert("Đănh nhập thành công!");
+      } else {
+        alert(response.data.msg);
+      }
+    } catch (error) {
+      console.error("There was an error!", error);
     }
   };
-
   return (
     <div className="wrapper w-full block justify-between md:flex md:mt-0 pt-[20px] px-[20px]">
       {/* content */}
@@ -127,7 +122,6 @@ function Login() {
           <div
             className={classNames(
               "relative border-[1px] p-3 mt-2 sm:h-[50px] h-[40px] flex items-center mb-10",
-              { "border-red-500": showName }
             )}
           >
             <input
@@ -137,17 +131,11 @@ function Login() {
               value={email || ""}
               onChange={(e) => setEmail(e.target.value)}
             />
-            {showName && (
-              <p className="absolute left-0 bottom-[-20px] text-red-500">
-                {error}
-              </p>
-            )}
           </div>
           <label className="sm:text-3xl text-2xl">Mật Khẩu</label>
           <div
             className={classNames(
               "relative border-[1px] p-3 mt-2 sm:h-[50px] h-[40px] flex items-center mb-10",
-              { "border-red-500": showPassword }
             )}
           >
             <input
@@ -157,11 +145,6 @@ function Login() {
               value={password || ""}
               onChange={(e) => setPassword(e.target.value)}
             />
-            {showPassword && (
-              <p className="absolute left-0 bottom-[-20px] text-red-500">
-                {error}
-              </p>
-            )}
           </div>
           <div className="flex items-center justify-between">
             <span className="sm:text-2xl text-xl text-green_400">

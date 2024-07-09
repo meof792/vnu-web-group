@@ -10,11 +10,6 @@ import {
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-<<<<<<< HEAD
-// add code
-// add code
-=======
->>>>>>> 7318a87cc25e22e5ffd679e61aa26924dd218960
 
 function Login() {
   const [email, setEmail] = useState("");

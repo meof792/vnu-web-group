@@ -14,37 +14,85 @@ html{
 ul {
     list-style-type: none; /* Xóa dấu đầu dòng của ul */
     margin: 0;             /* Xóa margin mặc định */
-    padding: 0;            /* Xóa padding mặc định */
+    padding: 0;  
+    cursor: pointer;          /* Xóa padding mặc định */
   }
   
   li {
     list-style-type: none; /* Xóa dấu đầu dòng của li */
     margin: 0;             /* Xóa margin mặc định */
-    padding: 0;            /* Xóa padding mặc định */
+    padding: 0;
+    cursor: pointer;            /* Xóa padding mặc định */
   }
   
-  // input {
-  //   border: none;          /* Xóa border mặc định */
-  //   outline: none;         /* Xóa outline mặc định */
-  //   padding: 0;            /* Xóa padding mặc định */
-  //   margin: 0;             /* Xóa margin mặc định */
-  //   -webkit-appearance: none; /* Xóa các kiểu mặc định trên trình duyệt WebKit */
-  //   -moz-appearance: none;    /* Xóa các kiểu mặc định trên Firefox */
-  //   appearance: none;         /* Xóa các kiểu mặc định */
-  // }
-  
-  /* Đảm bảo các input không nhận style mặc định khi được focus */
-  input:focus {
-    outline: none;
-  }
-  button{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
   img{
     width: 100%;
   height: 100%;
   object-fit: cover;
-  }
-  
+}
+button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+  /* Xóa các kiểu mặc định của input */
+input {
+    border: none;                /* Xóa border mặc định */
+    outline: none;               /* Xóa outline mặc định */
+    padding: 0;                  /* Xóa padding mặc định */
+    margin: 0;                   /* Xóa margin mặc định */
+    -webkit-appearance: none;    /* Xóa các kiểu mặc định trên trình duyệt WebKit */
+    -moz-appearance: none;       /* Xóa các kiểu mặc định trên Firefox */
+    appearance: none;            /* Xóa các kiểu mặc định */
+}
+
+/* Đảm bảo các input không nhận style mặc định khi được focus */
+input:focus {
+    outline: none;
+}
+
+
+
+ input[type="checkbox"] {
+    appearance: none;            /* Xóa các kiểu mặc định */
+    -webkit-appearance: none;    /* Xóa các kiểu mặc định trên trình duyệt WebKit */
+    -moz-appearance: none;       /* Xóa các kiểu mặc định trên Firefox */
+    border: none;                /* Xóa border mặc định */
+}
+
+
+ input[type="checkbox"]:checked::before {
+    content: '\2714';            /* Ký tự checkmark Unicode */
+    color: #ffffff;              /* Màu của ký tự checkmark */
+    font-size: 30px;             /* Kích thước của ký tự checkmark */
+    background-color: #6cff71;   /* Màu nền của checkbox đã chọn */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+html ::-webkit-scrollbar {
+  border-radius: 0px;
+  width: 8px;
+}
+html *::-webkit-scrollbar {
+  border-radius: 0;
+  width: 8px;
+}
+html ::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(22, 24, 35, 0.06);
+}
+html *::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(22, 24, 35, 0.06);
+}
+html ::-webkit-scrollbar-track {
+  border-radius: 0px;
+  background-color: rgba(0, 0, 0, 0);
+}
+html *::-webkit-scrollbar-track {
+  border-radius: 0;
+  background-color: rgba(0, 0, 0, 0);
+}

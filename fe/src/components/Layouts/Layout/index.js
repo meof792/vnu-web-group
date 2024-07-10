@@ -4,7 +4,7 @@ import Sidebar from "../../component/Sidebar";
 
 function Layout({ children }) {
   return (
-    <div>
+    <div className="min-h-[100vh] ">
       <Header />
       <div className="flex">
         <Sidebar />

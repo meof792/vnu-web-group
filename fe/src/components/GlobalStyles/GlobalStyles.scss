@@ -96,3 +96,30 @@ html *::-webkit-scrollbar-track {
   border-radius: 0;
   background-color: rgba(0, 0, 0, 0);
 }
+
+
+// xóa cài đặt mặc định 
+select {
+  border: none;
+  -webkit-appearance: none;
+  -moz-appearance: none; 
+  background-color: #ffffff;
+  color: #000;
+  outline: none; /* Loại bỏ viền khi focus */
+  box-shadow: none; /* Loại bỏ box-shadow khi focus */
+}
+
+option {
+  border: none;
+  outline: none; /* Loại bỏ viền khi focus */
+  box-shadow: none; /* Loại bỏ box-shadow khi focus */
+
+}
+select:focus {
+  outline: none; /* Loại bỏ viền khi focus */
+  border-color: transparent; /* Loại bỏ viền khi focus cho một số trình duyệt */
+  box-shadow: none; /* Loại bỏ box-shadow khi focus */
+}
+td,th,input{
+  cursor: pointer;
+}

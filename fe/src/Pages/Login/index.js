@@ -1,7 +1,7 @@
 import React from "react";
-import "./Login.scss";
 import classNames from "classnames";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircle,
@@ -11,9 +11,15 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
+import "./Login.scss";
+import Context from "./Context";
+
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [showName, setShowName] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showName, setShowName] = useState(false);
@@ -25,7 +31,6 @@ function Login() {
     setShowPassword(false);
     setShowName(false);
     setError("");
-
     // Nếu tất cả điều kiện đều đúng, tiếp tục gửi yêu cầu đăng nhập
     try {
       const response = await axios.post("http://127.0.0.1:8000/api/login", {
@@ -52,6 +57,10 @@ function Login() {
   };
 
   return (
+    <div className="wrapper w-full block justify-between md:flex lg:pt-0 pt-[20px]  px-[20px]">
+      {/* content */}
+
+      <Context />
     <div className="wrapper w-full block justify-between md:flex md:mt-0 py-[20px] px-[20px]">
       {/* content */}
 
@@ -181,7 +190,7 @@ function Login() {
             {/* input mật khẩu */}
             <input
               className="sm:text-3xl text-2xl"
-              type="password"
+              type="text"
               placeholder="Mật khẩu"
               value={password || ""}
               onChange={(e) => setPassword(e.target.value)}
@@ -201,12 +210,14 @@ function Login() {
             <span className="sm:text-2xl text-xl text-green_400">
               Quên mật khẩu ?
             </span>{" "}
-            <button
-              className="w-[100px] h-[40px] bg-green_400 text-white text-2xl hover:scale-110 hover:bg-green_400/70 transition-all"
-              type="submit"
-            >
-              Đăng Nhập
-            </button>
+            <Link to="/table">
+              <button
+                className="w-[100px] h-[40px] bg-green_400 text-white text-2xl hover:scale-110 hover:bg-green_400/70 transition-all"
+                type="submit"
+              >
+                Đăng Nhập
+              </button>
+            </Link>
           </div>
           {/* click để xác nhận không phải ng máy */}
           <div className="bg-[#F5F5F5] p-5 mt-10 flex items-center">

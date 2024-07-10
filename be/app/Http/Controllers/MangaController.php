@@ -27,14 +27,14 @@ class MangaController extends Controller
             'username' => 'required|string|between:5,17|regex:/^\S*$/u',
         ]);
         if ($validator1->fails()) {
-            return response()->json(['success' => false, 'msg' => 'Tên đăng nhập phải có độ dài từ 5-17 kí tự (không được có dấu cách)']);
+            return response()->json(['success' => false, 'type' => "tk", 'msg' => 'Tên đăng nhập phải có độ dài từ 5-17 kí tự (không được có dấu cách)']);
         }
+        // Nếu dữ liệu password không hợp lệ, trả về thông báo lỗi
         $validator2 = Validator::make($request->all(), [
             'password' => 'required|string|min:6',
         ]);
-        // Nếu dữ liệu password không hợp lệ, trả về thông báo lỗi
         if ($validator2->fails()) {
-            return response()->json(['success' => false, 'msg' => 'Mật khẩu phải có ít nhất 6 kí tự']);
+            return response()->json(['success' => false, 'type' => 'mk', 'msg' => 'Mật khẩu phải có ít nhất 6 kí tự']);
         }
         $user = UserWeb::where('username', $request->input('username'))->first();
         if ($user && Hash::check($request->input('password'), $user->password)) {

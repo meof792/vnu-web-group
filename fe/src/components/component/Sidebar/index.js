@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import {
   faCaretRight,
   faDownload,
@@ -11,6 +12,7 @@ import {
   faTable,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 function Sidebar() {
   const [showStates, setShowStates] = useState({
@@ -43,8 +45,14 @@ function Sidebar() {
         {showStates.show2 && (
           <ul className="transition transition-all duration-300">
             <li className="bg-green_400 h-[40px] flex items-center pl-5 text-2xl text-white border-[1px]">
-              <FontAwesomeIcon className="mr-4" icon={faRightFromBracket} />{" "}
-              Đăng Xuất
+              <Link to={"/"}>
+                {" "}
+                <FontAwesomeIcon
+                  className="mr-4"
+                  icon={faRightFromBracket}
+                />{" "}
+                Đăng Xuất
+              </Link>
             </li>
             <li className="bg-green_400 h-[40px] flex items-center pl-5 text-2xl text-white border-[1px]">
               <FontAwesomeIcon className="mr-4" icon={faLock} /> Đổi mật khẩu
@@ -59,6 +67,7 @@ function Sidebar() {
           />{" "}
           Trang chủ
         </ul>
+
         <ul className="transition transition-all duration-300 w-full text-2xl border-[1px]">
           <li
             className="h-[70px] flex items-center px-5 bg-[#f4f4f4]"

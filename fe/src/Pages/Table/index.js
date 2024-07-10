@@ -5,8 +5,8 @@ import ResultBoard from "../../components/Layouts/Layout/resultBoard";
 import { useState } from "react";
 function Table() {
   const [show, setShow] = useState(false);
-  const [specialized1, setSpecialized1] = useState(1);
-  const [specialized2, setSpecialized2] = useState(2);
+  const [specialized1, setSpecialized1] = useState("Toàn trường");
+  const [specialized2, setSpecialized2] = useState("Ngành học");
   const handleMouseEnter = () => {
     setShow(true);
   };
@@ -28,18 +28,18 @@ function Table() {
         <div>
           <div className="title bg-[#01b437] text-white flex items-center justify-center text-center text-2xl py-5">
             <div
-              className="relative bg-[#ffffff] w-[100px] h-[30px] flex items-center justify-center text-center text-[#01b437] mr-10 rounded-md cursor-pointer"
+              className="relative bg-[#ffffff] w-[200px] h-[30px] flex items-center justify-center text-center text-[#01b437] mr-10 rounded-md cursor-pointer"
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
-              Ngành {specialized2}{" "}
+              Ngành {specialized1}{" "}
               <FontAwesomeIcon className="ml-4 text-3xl" icon={faCaretDown} />
               {show && (
                 <div
                   onClick={handleClick}
-                  className="absolute bg-[#ffffff] bottom-[-31px] w-[100px] h-[30px] rounded-md border-[1px] flex items-center pl-4"
+                  className="absolute bg-[#ffffff] bottom-[-31px] w-[200px] h-[30px] rounded-md border-[1px] flex items-center pl-10"
                 >
-                  Ngành {specialized1}
+                  Ngành {specialized2}
                 </div>
               )}
             </div>

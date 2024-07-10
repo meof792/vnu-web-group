@@ -9,6 +9,9 @@ import axios from "axios";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [showName, setShowName] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [acceptTerms, setAcceptTerms] = useState(false);
 
   useEffect(() => {}, [acceptTerms]);
@@ -148,7 +151,8 @@ function Login() {
           <label className="sm:text-3xl text-2xl">Tên truy cập</label>
           <div
             className={classNames(
-              "relative border-[1px] p-3 mt-2 sm:h-[50px] h-[40px] flex items-center mb-10"
+              "relative border-[1px] p-3 mt-2 sm:h-[50px] h-[40px] flex items-center mb-10",
+              { "border-red-500": showName }
             )}
           >
             <input
@@ -158,20 +162,31 @@ function Login() {
               value={email || ""}
               onChange={(e) => setEmail(e.target.value)}
             />
+            {showName && (
+              <p className="absolute left-0 bottom-[-20px] text-red-500">
+                {error}
+              </p>
+            )}
           </div>
           <label className="sm:text-3xl text-2xl">Mật Khẩu</label>
           <div
             className={classNames(
-              "relative border-[1px] p-3 mt-2 sm:h-[50px] h-[40px] flex items-center mb-10"
+              "relative border-[1px] p-3 mt-2 sm:h-[50px] h-[40px] flex items-center mb-10",
+              { "border-red-500": showPassword }
             )}
           >
             <input
               className="sm:text-3xl text-2xl"
-              type="password"
+              type="text"
               placeholder="Mật khẩu"
               value={password || ""}
               onChange={(e) => setPassword(e.target.value)}
             />
+            {showPassword && (
+              <p className="absolute left-0 bottom-[-20px] text-red-500">
+                {error}
+              </p>
+            )}
           </div>
           <div className="flex items-center justify-between">
             <span className="sm:text-2xl text-xl text-green_400">

@@ -1,18 +1,11 @@
 import React from "react";
 import classNames from "classnames";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCircle,
-  faLock,
-  faUser,
-  faUsers,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 import "./Login.scss";
-import Context from "./Context";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -21,9 +14,6 @@ function Login() {
   const [showName, setShowName] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [acceptTerms, setAcceptTerms] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showName, setShowName] = useState(false);
-  const [error, setError] = useState("");
 
   useEffect(() => {}, [acceptTerms]);
   const handleLogin = async (e) => {
@@ -31,6 +21,28 @@ function Login() {
     setShowPassword(false);
     setShowName(false);
     setError("");
+    // Kiểm tra các điều kiện trước khi gửi yêu cầu đăng nhập
+    if (email === "") {
+      setShowName(true);
+      setError("Vui lòng nhập tài khoản");
+      return;
+    } else if (email.length !== 8 || !/^\d+$/.test(email)) {
+      setShowName(true);
+      setError("Vui lòng nhập mã sinh viên VNU");
+      return;
+    } else if (password === "") {
+      setShowPassword(true);
+      setError("Vui lòng nhập mật khẩu");
+      return;
+    } else if (password.length < 6) {
+      setShowPassword(true);
+      setError("Mật khẩu của bạn không đúng");
+      return;
+    } else if (!acceptTerms) {
+      alert("Vui lòng Click để xác nhận bạn là sinh viên VNU");
+      return;
+    }
+
     // Nếu tất cả điều kiện đều đúng, tiếp tục gửi yêu cầu đăng nhập
     try {
       const response = await axios.post("http://127.0.0.1:8000/api/login", {
@@ -38,30 +50,22 @@ function Login() {
         password: password,
       });
 
+      // Xử lý logic đăng nhập ở đây
+
       if (response.data.success) {
+        //Thực hiện code khi đăng nhập điều hướng
         localStorage.setItem("username", email); // Lưu tên người dùng đã đăng nhập toàn cục
-        alert("Đăng nhập thành công!");
+        alert("Đănh nhập thành công!");
       } else {
-        if(response.data.type == "tk"){
-          setShowName(true);
-          setShowPassword(false);
-        }else{
-          setShowName(false);
-          setShowPassword(true);
-        }
-        setError(response.data.msg);
+        //Thực hiện code khi đăng nhập không hợp lệ
+        alert(response.data.msg);
       }
     } catch (error) {
-      console.error("Có lỗi xảy ra!", error);
+      console.error("There was an error!", error);
     }
   };
-
   return (
-    <div className="wrapper w-full block justify-between md:flex lg:pt-0 pt-[20px]  px-[20px]">
-      {/* content */}
-
-      <Context />
-    <div className="wrapper w-full block justify-between md:flex md:mt-0 py-[20px] px-[20px]">
+    <div className="wrapper w-full block justify-between md:flex md:mt-0 pt-[20px] px-[20px]">
       {/* content */}
 
       <div className="  w-full mr-[30px]">
@@ -69,19 +73,10 @@ function Login() {
           <button className="md:h-[60px] h-[40px] p-[20px] border border-[#ccc] bg-green_400 text-[#fff] md:text-3xl text-[13px] mr-[30px] hover:scale-110 hover:bg-green_400/70 transition-all">
             Trang chủ VNU
           </button>
-          <button className="md:h-[60px] h-[40px] p-[20px] border border-[#ccc] bg-green_400 text-[#fff] md:text-3xl text-[13px]  mr-[30px]  hover:scale-110 hover:bg-green_400/70 transition-all">
+          <button className="md:h-[60px] h-[40px] p-[20px] border border-[#ccc] bg-green_400 text-[#fff] md:text-3xl text-[13px] hover:scale-110 hover:bg-green_400/70 transition-all">
             về trang chủ DUCA
           </button>
-          <button className="md:h-[60px] h-[40px] hidden sm:block p-[20px] border border-[#ccc] bg-green_400 text-[#fff] md:text-3xl text-[13px]  hover:scale-110 hover:bg-green_400/70 transition-all">
-            <FontAwesomeIcon className="mr-[10px]" icon={faUsers} />
-            <span className="text-[red]"> 320 online</span>
-          </button>
         </div>
-        <button className="md:h-[60px] h-[40px] sm:hidden flex items-center mt-4 p-[20px] border border-[#ccc] bg-green_400 text-[#fff] md:text-3xl text-[13px]  hover:scale-110 hover:bg-green_400/70 transition-all ">
-          <FontAwesomeIcon className="mr-[10px]" icon={faUsers} />
-          <span className="text-[red]"> 320 online</span>
-        </button>
-
         <div className="max-w-[850px] mt-[30px] bg-yellow_300 md:p-[20px] p-[12px]">
           <span className="sm:text-3xl text-xl">THỜI GIAN ĐĂNG KÍ HỌC</span>
           <li className="mt-2 sm:text-2xl text-[10px] flex items-center">
@@ -149,11 +144,10 @@ function Login() {
         </nav>
       </div>
       {/* login */}
-      <div className="  items-center max-h-[450px]  md:w-[700px] mt-20 md:m-0 border-2 border-[#ccc]">
+      <div className=" mb-20  items-center max-h-[450px]  md:w-[700px] mt-20 md:m-0 border-2 border-[#ccc]">
         <div className=" flex items-center pl-6 py-5 bg-green_400 text-white border-b-2 border-[#ccc] ">
           <span className="sm:text-4xl text-2xl ">Đăng Nhập</span>
         </div>
-        {/* form đăng nhập */}
         <form className="px-6 py-10" onSubmit={handleLogin}>
           <label className="sm:text-3xl text-2xl">Tên truy cập</label>
           <div
@@ -162,17 +156,12 @@ function Login() {
               { "border-red-500": showName }
             )}
           >
-            {/* input tên mã sinh viên */}
             <input
               className="sm:text-3xl text-2xl "
               type="text"
               placeholder="Mã sinh viên"
               value={email || ""}
               onChange={(e) => setEmail(e.target.value)}
-            />
-            <FontAwesomeIcon
-              className="absolute right-5 sm:text-3xl text-2xl text-[#ccc]"
-              icon={faUser}
             />
             {showName && (
               <p className="absolute left-0 bottom-[-20px] text-red-500">
@@ -187,7 +176,6 @@ function Login() {
               { "border-red-500": showPassword }
             )}
           >
-            {/* input mật khẩu */}
             <input
               className="sm:text-3xl text-2xl"
               type="text"
@@ -195,31 +183,23 @@ function Login() {
               value={password || ""}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <FontAwesomeIcon
-              className="absolute right-5 sm:text-3xl text-2xl text-[#ccc]"
-              icon={faLock}
-            />
             {showPassword && (
               <p className="absolute left-0 bottom-[-20px] text-red-500">
                 {error}
               </p>
             )}
           </div>
-          {/* quên mật khẩu và nút đăng nhập */}
           <div className="flex items-center justify-between">
             <span className="sm:text-2xl text-xl text-green_400">
               Quên mật khẩu ?
             </span>{" "}
-            <Link to="/table">
-              <button
-                className="w-[100px] h-[40px] bg-green_400 text-white text-2xl hover:scale-110 hover:bg-green_400/70 transition-all"
-                type="submit"
-              >
-                Đăng Nhập
-              </button>
-            </Link>
+            <button
+              className="w-[100px] h-[40px] bg-green_400 text-white text-2xl hover:scale-110 hover:bg-green_400/70 transition-all"
+              type="submit"
+            >
+              Đăng Nhập
+            </button>
           </div>
-          {/* click để xác nhận không phải ng máy */}
           <div className="bg-[#F5F5F5] p-5 mt-10 flex items-center">
             <input
               className="border-2 w-[20px] h-[20px] bg-white text-[#ccc] mr-8 "
@@ -232,7 +212,6 @@ function Login() {
             </label>
           </div>
         </form>
-        {/* kết thúc form đăng nhập */}
       </div>
     </div>
   );

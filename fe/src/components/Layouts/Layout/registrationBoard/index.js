@@ -1,6 +1,6 @@
 function RegistrationBoard() {
   return (
-    <div className="max-h-[300px] overflow-y-auto ">
+    <div className="h-[285px] overflow-y-auto ">
       <table className="w-full border-[1px] ">
         <thead>
           <tr>
@@ -76,7 +76,6 @@ function RegistrationBoard() {
                 value={""}
               />
             </td>
-
             <td className="text-center text-xl border-[1px]  h-full">
               MAT 5678
             </td>
@@ -95,69 +94,7 @@ function RegistrationBoard() {
             <td className="text-center text-xl border-[1px]  h-full">
               T2 (6-7) -100T5, T3 (8-10) - 100-Y7
             </td>
-          </tr>
-          <tr className="h-[40px]">
-            <td
-              className="text-center text-xl border-[1px] flex
-           h-[40px]"
-            >
-              <input
-                className="w-full h-[100%] checkbox  "
-                type="checkbox"
-                value={""}
-              />
-            </td>
-
-            <td className="text-center text-xl border-[1px]  h-full">
-              MAT 5678
-            </td>
-            <td className="text-center text-xl border-[1px]  h-full">
-              Kinh tế chính trị mác lễ lin
-            </td>
-            <td className="text-center text-xl border-[1px]  h-full">6</td>
-            <td className="text-center text-xl border-[1px]  h-full">
-              Nguyễn Thế Công
-            </td>
-            <td className="text-center text-xl border-[1px]  h-full">110</td>
-            <td className="text-center text-xl border-[1px]  h-full">110</td>
-            <td className="text-center text-xl border-[1px]  h-full">
-              375.000
-            </td>
-            <td className="text-center text-xl border-[1px]  h-full">
-              T2 (6-7) -100T5, T3 (8-10) - 100-Y7
-            </td>
-          </tr>
-          <tr className="h-[40px]">
-            <td
-              className="text-center text-xl border-[1px] flex
-           h-[40px]"
-            >
-              <input
-                className="w-full h-[100%] checkbox  "
-                type="checkbox"
-                value={""}
-              />
-            </td>
-
-            <td className="text-center text-xl border-[1px]  h-full">
-              MAT 5678
-            </td>
-            <td className="text-center text-xl border-[1px]  h-full">
-              Kinh tế chính trị mác lễ lin
-            </td>
-            <td className="text-center text-xl border-[1px]  h-full">6</td>
-            <td className="text-center text-xl border-[1px]  h-full">
-              Nguyễn Thế Công
-            </td>
-            <td className="text-center text-xl border-[1px]  h-full">110</td>
-            <td className="text-center text-xl border-[1px]  h-full">110</td>
-            <td className="text-center text-xl border-[1px]  h-full">
-              375.000
-            </td>
-            <td className="text-center text-xl border-[1px]  h-full">
-              T2 (6-7) -100T5, T3 (8-10) - 100-Y7
-            </td>
-          </tr>
+          </tr>{" "}
           <tr className="h-[40px]">
             <td
               className="text-center text-xl border-[1px] flex
@@ -187,7 +124,7 @@ function RegistrationBoard() {
             <td className="text-center text-xl border-[1px]  h-full">
               T2 (6-7) -100T5, T3 (8-10) - 100-Y7
             </td>
-          </tr>
+          </tr>{" "}
           <tr className="h-[40px]">
             <td
               className="text-center text-xl border-[1px] flex
@@ -217,7 +154,97 @@ function RegistrationBoard() {
             <td className="text-center text-xl border-[1px]  h-full">
               T2 (6-7) -100T5, T3 (8-10) - 100-Y7
             </td>
-          </tr>
+          </tr>{" "}
+          <tr className="h-[40px]">
+            <td
+              className="text-center text-xl border-[1px] flex
+           h-[40px]"
+            >
+              <input
+                className="w-full h-[100%] checkbox  "
+                type="checkbox"
+                value={""}
+              />
+            </td>
+            <td className="text-center text-xl border-[1px]  h-full">
+              MAT 5678
+            </td>
+            <td className="text-center text-xl border-[1px]  h-full">
+              Kinh tế chính trị mác lễ lin
+            </td>
+            <td className="text-center text-xl border-[1px]  h-full">6</td>
+            <td className="text-center text-xl border-[1px]  h-full">
+              Nguyễn Thế Công
+            </td>
+            <td className="text-center text-xl border-[1px]  h-full">110</td>
+            <td className="text-center text-xl border-[1px]  h-full">110</td>
+            <td className="text-center text-xl border-[1px]  h-full">
+              375.000
+            </td>
+            <td className="text-center text-xl border-[1px]  h-full">
+              T2 (6-7) -100T5, T3 (8-10) - 100-Y7
+            </td>
+          </tr>{" "}
+          <tr className="h-[40px]">
+            <td
+              className="text-center text-xl border-[1px] flex
+           h-[40px]"
+            >
+              <input
+                className="w-full h-[100%] checkbox  "
+                type="checkbox"
+                value={""}
+              />
+            </td>
+            <td className="text-center text-xl border-[1px]  h-full">
+              MAT 5678
+            </td>
+            <td className="text-center text-xl border-[1px]  h-full">
+              Kinh tế chính trị mác lễ lin
+            </td>
+            <td className="text-center text-xl border-[1px]  h-full">6</td>
+            <td className="text-center text-xl border-[1px]  h-full">
+              Nguyễn Thế Công
+            </td>
+            <td className="text-center text-xl border-[1px]  h-full">110</td>
+            <td className="text-center text-xl border-[1px]  h-full">110</td>
+            <td className="text-center text-xl border-[1px]  h-full">
+              375.000
+            </td>
+            <td className="text-center text-xl border-[1px]  h-full">
+              T2 (6-7) -100T5, T3 (8-10) - 100-Y7
+            </td>
+          </tr>{" "}
+          <tr className="h-[40px]">
+            <td
+              className="text-center text-xl border-[1px] flex
+           h-[40px]"
+            >
+              <input
+                className="w-full h-[100%] checkbox  "
+                type="checkbox"
+                value={""}
+              />
+            </td>
+            <td className="text-center text-xl border-[1px]  h-full">
+              MAT 5678
+            </td>
+            <td className="text-center text-xl border-[1px]  h-full">
+              Kinh tế chính trị mác lễ lin
+            </td>
+            <td className="text-center text-xl border-[1px]  h-full">6</td>
+            <td className="text-center text-xl border-[1px]  h-full">
+              Nguyễn Thế Công
+            </td>
+            <td className="text-center text-xl border-[1px]  h-full">110</td>
+            <td className="text-center text-xl border-[1px]  h-full">110</td>
+            <td className="text-center text-xl border-[1px]  h-full">
+              375.000
+            </td>
+            <td className="text-center text-xl border-[1px]  h-full">
+              T2 (6-7) -100T5, T3 (8-10) - 100-Y7
+            </td>
+          </tr>{" "}
           <tr className="h-[40px]">
             <td
               className="text-center text-xl border-[1px] flex

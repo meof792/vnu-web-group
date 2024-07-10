@@ -40,7 +40,7 @@ function Login() {
       setShowPassword(true);
       setError("Vui lòng nhập mật khẩu");
       return;
-    } else if (password.length < 9) {
+    } else if (password.length < 6) {
       setShowPassword(true);
       setError("Mật khẩu của bạn không đúng");
       return;

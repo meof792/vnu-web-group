@@ -12,12 +12,34 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use League\Csv\Reader;
 
-class MangaController extends Controller
+class WebController extends Controller
 {
     //
+    public function subject(Request $request)
+    {
+        $username = $request->input('username');
+        $user = UserWeb::where('username', $username)->first();
+        $subject1 = Subject::all();
+        $subject1->each(function ($sub) {
+            if ($sub->day != "CN") {
+                $sub->schedule = "Thứ " . $sub->day . ", " . $sub->shift . ", " . $sub->at;
+            } else {
+                $sub->schedule = $sub->day . ", " . $sub->shift . ", " . $sub->at;
+            }
+        });
+        $subject2 = Subject::where('for', $user->major)->get();
+        $subject2->each(function ($sub) {
+            if ($sub->day != "CN") {
+                $sub->schedule = "Thứ " . $sub->day . ", " . $sub->shift . ", " . $sub->at;
+            } else {
+                $sub->schedule = $sub->day . ", " . $sub->shift . ", " . $sub->at;
+            }
+        });
+
+        return response()->json(['subject1' => $subject1, 'subject2' => $subject2]);
+    }
     public function create()
     {
-        
     }
 
 

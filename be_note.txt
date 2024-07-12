@@ -1,0 +1,20 @@
+#0 Nhớ cmt tên biến đấy đọc chả hiểu gì
+
+#1 Nhắc fe tí
+- Thêm autoFocus vào thẻ input nhập tài khoản, để khi vừa vào nó trỏ chuột vào input luôn
+- Note: muốn dùng localStorage.setItem("username", email); thì gán localStorage.getItem("username") vào một biến
+
+#2 Cách dùng respone json môn học chung và môn học riêng từ be trả về
+- đường link sử dụng api "http://127.0.0.1:8000/api/subject" phương thức post
+- fe cần gửi tới be về tên người dùng đã đăng nhập trước đó (sử dụng localStorage.getItem), gửi đi với key là 'username'
+- be trả về 2 key gồm subject1 (chứa tất cả môn học chung) và subject2 (Chứa tất cả môn học chuyên ngành của username)
+- các thuộc tính của từng đối tượng trong mảng subject1 và subject2 bao gồm
+    "name": Tên môn học,
+    "credit": Số tín chỉ,
+    "class": Mã học phần,
+    "total_student": Số chỗ mở,
+    "student": Số sinh viên đã đăng kí,
+    "lectures": Giảng viên,
+    "schedule": Lịch học
+- cách sử dụng: dùng vòng lặp duyệt từng thành phần của mảng subject1 và subject 2
+    subject1 as sub, sub.class

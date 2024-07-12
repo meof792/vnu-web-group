@@ -21,30 +21,30 @@ function Login() {
     setShowPassword(false);
     setShowName(false);
     setError("");
-
+    //
     // Nếu tất cả điều kiện đều đúng, tiếp tục gửi yêu cầu đăng nhập
     try {
       const response = await axios.post("http://127.0.0.1:8000/api/login", {
         username: email,
         password: password,
       });
-
-      if (response.data.success) {
-        if(acceptTerms){
-          localStorage.setItem("username", email); // Lưu tên người dùng đã đăng nhập toàn cục
-          alert("Đăng nhập thành công!");
-        }else{
-          alert("Bạn chưa xác nhận!");
-        }
-      } else {
-        if (response.data.type === "tk") {
-          setShowName(true);
-          setShowPassword(false);
+      
+      if(acceptTerms){
+        if (response.data.success) {
+            localStorage.setItem("username", email); // Lưu tên người dùng đã đăng nhập toàn cục
+            alert("Đăng nhập thành công!");
         } else {
-          setShowName(false);
-          setShowPassword(true);
+          if (response.data.type === "tk") {
+            setShowName(true);
+            setShowPassword(false);
+          } else {
+            setShowName(false);
+            setShowPassword(true);
+          }
+          setError(response.data.msg);
         }
-        setError(response.data.msg);
+      }else{
+        alert("Bạn chưa xác nhận!");
       }
     } catch (error) {
       console.error("Có lỗi xảy ra!", error);
@@ -73,6 +73,7 @@ function Login() {
               className="sm:text-3xl text-2xl "
               type="text"
               placeholder="Mã sinh viên"
+              autoFocus
               value={email || ""}
               onChange={(e) => setEmail(e.target.value)}
             />

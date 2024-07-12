@@ -30,8 +30,12 @@ function Login() {
       });
 
       if (response.data.success) {
-        localStorage.setItem("username", email); // Lưu tên người dùng đã đăng nhập toàn cục
-        alert("Đăng nhập thành công!");
+        if(acceptTerms){
+          localStorage.setItem("username", email); // Lưu tên người dùng đã đăng nhập toàn cục
+          alert("Đăng nhập thành công!");
+        }else{
+          alert("Bạn chưa xác nhận!");
+        }
       } else {
         if (response.data.type === "tk") {
           setShowName(true);
@@ -91,7 +95,7 @@ function Login() {
           >
             <input
               className="sm:text-3xl text-2xl"
-              type="text"
+              type="password"
               placeholder="Mật khẩu"
               value={password || ""}
               onChange={(e) => setPassword(e.target.value)}

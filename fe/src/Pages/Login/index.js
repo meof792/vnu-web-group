@@ -1,19 +1,19 @@
-import React from "react";
 import classNames from "classnames";
 import { useState, useEffect } from "react";
-
-import axios from "axios";
-
-import "./Login.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Context from "./Context";
+import { faLock, faUser } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
+// add code
+// add code
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [acceptTerms, setAcceptTerms] = useState(false);
   const [showName, setShowName] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [acceptTerms, setAcceptTerms] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {}, [acceptTerms]);
   const handleLogin = async (e) => {
@@ -21,6 +21,7 @@ function Login() {
     setShowPassword(false);
     setShowName(false);
     setError("");
+
     // Nếu tất cả điều kiện đều đúng, tiếp tục gửi yêu cầu đăng nhập
     try {
       const response = await axios.post("http://127.0.0.1:8000/api/login", {
@@ -29,8 +30,12 @@ function Login() {
       });
 
       if (response.data.success) {
-        localStorage.setItem("username", email); // Lưu tên người dùng đã đăng nhập toàn cục
-        alert("Đăng nhập thành công!");
+        if (acceptTerms) {
+          localStorage.setItem("username", email); // Lưu tên người dùng đã đăng nhập toàn cục
+          alert("Đăng nhập thành công!");
+        } else {
+          alert("Bạn chưa xác nhận!");
+        }
       } else {
         if (response.data.type === "tk") {
           setShowName(true);
@@ -42,7 +47,7 @@ function Login() {
         setError(response.data.msg);
       }
     } catch (error) {
-      alert.error("Có lỗi xảy ra!", error);
+      console.error("Có lỗi xảy ra!", error);
     }
   };
 
@@ -71,6 +76,10 @@ function Login() {
               value={email || ""}
               onChange={(e) => setEmail(e.target.value)}
             />
+            <FontAwesomeIcon
+              className="absolute right-5 sm:text-3xl text-2xl text-[#ccc]"
+              icon={faUser}
+            />
             {showName && (
               <p className="absolute left-0 bottom-[-20px] text-red-500">
                 {error}
@@ -86,10 +95,15 @@ function Login() {
           >
             <input
               className="sm:text-3xl text-2xl"
-              type="text"
+              type="password"
               placeholder="Mật khẩu"
               value={password || ""}
               onChange={(e) => setPassword(e.target.value)}
+            />
+
+            <FontAwesomeIcon
+              className="absolute right-5 sm:text-3xl text-2xl text-[#ccc]"
+              icon={faLock}
             />
             {showPassword && (
               <p className="absolute left-0 bottom-[-20px] text-red-500">

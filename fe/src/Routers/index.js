@@ -3,6 +3,7 @@ import Home from "../Pages/Home";
 import Table from "../Pages/Table";
 import Login from "../Pages/Login";
 import DefaultLayout from "../components/Layouts/DefauLayout";
+import Print from "../Pages/Print";
 const publicRoutes = [
   {
     path: "/",
@@ -14,8 +15,12 @@ const publicRoutes = [
     component: Home,
   },
   {
-    path: "/table",
+    path: "/table/:table",
     component: Table,
+  },
+  {
+    path: "/print",
+    component: Print,
   },
 ];
 

@@ -4,9 +4,9 @@ import Sidebar from "../../component/Sidebar";
 
 function Layout({ children }) {
   return (
-    <div className="min-h-[100vh] ">
+    <div className="min-h-[100vh]  ">
       <Header />
-      <div className="flex">
+      <div className="sm:flex mb-[65px]">
         <Sidebar />
         <div className="flex-1">{children}</div>
       </div>

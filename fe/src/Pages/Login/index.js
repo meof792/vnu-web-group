@@ -13,6 +13,7 @@ function Login() {
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [showName, setShowName] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [inputType, setInputType] = useState("password");
   const [error, setError] = useState("");
 
   useEffect(() => {}, [acceptTerms]);
@@ -95,13 +96,15 @@ function Login() {
           >
             <input
               className="sm:text-3xl text-2xl"
-              type="password"
+              type={inputType}
               placeholder="Mật khẩu"
               value={password || ""}
               onChange={(e) => setPassword(e.target.value)}
             />
 
             <FontAwesomeIcon
+              onMouseEnter={() => setInputType("text")}
+              onMouseLeave={() => setInputType("password")}
               className="absolute right-5 sm:text-3xl text-2xl text-[#ccc]"
               icon={faLock}
             />

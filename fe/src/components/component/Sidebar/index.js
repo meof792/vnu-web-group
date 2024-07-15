@@ -39,7 +39,7 @@ function Sidebar() {
   };
 
   return (
-    <div className="sm:w-[230px] w-full h-full bg-sidebar sm:text-2xl text-xl">
+    <div className="md:w-[230px] w-full h-full bg-sidebar sm:text-2xl text-xl">
       <nav className="font-[550] text-[#2d2d2d]">
         <Link to={"/home"}>
           <ul
@@ -152,9 +152,11 @@ function Sidebar() {
                 Đăng Xuất
               </Link>
             </li>
-            <li className="bg-green_400 h-[40px] flex items-center pl-5  text-white border-[1px]">
-              <FontAwesomeIcon className="mr-4" icon={faLock} /> Đổi mật khẩu
-            </li>
+            <Link to={"/change-password"}>
+              <li className="bg-green_400 h-[40px] flex items-center pl-5  text-white border-[1px]">
+                <FontAwesomeIcon className="mr-4" icon={faLock} /> Đổi mật khẩu
+              </li>
+            </Link>
           </ul>
         )}
       </nav>

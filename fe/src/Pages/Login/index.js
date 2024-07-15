@@ -102,7 +102,7 @@ function Login() {
             <FontAwesomeIcon
               onMouseEnter={() => setInputType("text")}
               onMouseLeave={() => setInputType("password")}
-              className="absolute right-5 sm:text-3xl text-2xl text-[#ccc]"
+              className="absolute right-5 sm:text-3xl text-2xl text-[#ccc] hover:text-green_400"
               icon={faLock}
             />
             {showPassword && (
@@ -131,13 +131,17 @@ function Login() {
             />
             <div
               className={classNames(
-                "absolute top-1/2 left-5 bg-white transform -translate-y-1/2 w-[20px] h-[20px] flex items-center justify-center"
+                "absolute top-1/2 left-5 transform -translate-y-1/2 w-[20px] h-[20px] flex items-center justify-center",
+                {
+                  "bg-green_400": acceptTerms,
+                  "bg-white": !acceptTerms,
+                }
               )}
             >
               {acceptTerms ? (
                 <FontAwesomeIcon
                   icon={faCheck}
-                  className="text-3xl text-green_400"
+                  className="text-3xl text-white"
                 />
               ) : null}
             </div>

@@ -6,30 +6,20 @@ function ResultBoard() {
     <div className="max-h-[300px] overflow-y-auto overflow-x-auto sm:text-xl text-[10px] ">
       <table className="w-full border-[1px] min-w-[800px]">
         <thead>
-          <tr>
-            <th className=" bg-green_400 border-[1px] p-5 text-white">STT</th>
-            <th className=" bg-green_400 border-[1px] p-5 text-white">
-              Mã môn
-            </th>
-            <th className=" bg-green_400 border-[1px] p-5 text-white">
-              Tên Môn
-            </th>
-            <th className=" bg-green_400 border-[1px] p-5 text-white">TC</th>
-            <th className=" bg-green_400 border-[1px] p-5 text-white">
-              Tên giảng viên
-            </th>
-            <th className=" bg-green_400 border-[1px] p-5 text-white">
-              Học phí / Tín
-            </th>
-            <th className=" bg-green_400 border-[1px] p-5 text-white">
-              Lịch học
-            </th>
-            <th className=" bg-green_400 border-[1px] p-5 text-white">Xóa</th>
+          <tr className="bg-green_200">
+            <th className=" border-[1px] p-5 text-white">STT</th>
+            <th className=" border-[1px] p-5 text-white">Mã môn</th>
+            <th className=" border-[1px] p-5 text-white">Tên Môn</th>
+            <th className=" border-[1px] p-5 text-white">TC</th>
+            <th className=" border-[1px] p-5 text-white">Tên giảng viên</th>
+            <th className=" border-[1px] p-5 text-white">Học phí / Tín</th>
+            <th className=" border-[1px] p-5 text-white">Lịch học</th>
+            <th className=" border-[1px] p-5 text-white">Xóa</th>
           </tr>
         </thead>
 
         <tbody className="max-h-[300px] overflow-y-auto">
-          <tr className="h-[40px]">
+          <tr className="h-[25px]">
             <td className="text-center  border-[1px]  h-full">1</td>
             <td className="text-center  border-[1px]  h-full">MAT 5678</td>
             <td className="text-center  border-[1px]  h-full">
@@ -44,9 +34,9 @@ function ResultBoard() {
             <td className="text-center  border-[1px]  h-full">
               T2 (6-7) -100T5, T3 (8-10) - 100-Y7
             </td>
-            <td className="text-center  border-[1px] bg-[red]  h-full hover:opacity-50">
+            <td className="text-center  border-[1px] bg-[#ff5b5b]  h-full hover:bg-[red]">
               <FontAwesomeIcon
-                className=" md:text-5xl sm:3xl text-2xl text-white "
+                className=" md:text-3xl sm:3xl text-2xl text-white "
                 icon={faXmark}
               />
             </td>

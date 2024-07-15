@@ -20,7 +20,7 @@ const publicRoutes = [
     component: Table,
   },
   {
-    path: "/print",
+    path: "/print/:comic",
     component: Print,
   },
   {

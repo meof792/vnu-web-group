@@ -17,18 +17,22 @@ function Sidebar() {
   const location = useLocation();
   const [activeItem, setActiveItem] = useState("home");
   const [showTK, setShowTK] = useState(false);
+
   useEffect(() => {
     const currentUrl = location.pathname;
     const urlSegments = currentUrl.split("/");
     const lastSegment = urlSegments[urlSegments.length - 1];
+    console.log(lastSegment);
     setActiveItem(lastSegment);
     setShowStates(() => ({
       show: lastSegment === "1" || lastSegment === "2",
+      show2: lastSegment === "print1" || lastSegment === "print2",
     }));
   }, [location]);
   const [showStates, setShowStates] = useState({
     show: false,
     show1: false,
+    show2: false,
   });
 
   const handleClick = (key) => {
@@ -114,11 +118,14 @@ function Sidebar() {
           </ul>
         </Link>
 
-        <Link to={"/print"}>
+        <Link to={"/print/print1"}>
           <ul
             className={classNames(
               "transition-all duration-300 w-full  border-[1px]",
-              { "bg-click_sidebar text-green_400": activeItem === "print" }
+              {
+                "bg-click_sidebar text-green_400":
+                  activeItem === "print1" || activeItem === "print2",
+              }
             )}
           >
             <li
@@ -132,6 +139,44 @@ function Sidebar() {
               In ra các môn đã đăng kí
             </li>
           </ul>
+          {showStates.show2 && (
+            <>
+              <Link to={"/print/print1"}>
+                <li
+                  className={classNames(
+                    "sm:h-[45px] h-[30px]  flex items-center pl-10 border-[1px] bg-[#d3d3d3] text-[#2d2d2d]",
+                    {
+                      "bg-click_sidebar text-green_400":
+                        activeItem === "print1",
+                    }
+                  )}
+                >
+                  <FontAwesomeIcon
+                    className=" mr-5 sm:text-3xl text-xl"
+                    icon={faCaretRight}
+                  />
+                  In ra môn ngành 1
+                </li>
+              </Link>
+              <Link to={"/print/print2"}>
+                <li
+                  className={classNames(
+                    "sm:h-[45px] h-[30px]  flex items-center pl-10 border-[1px] bg-[#d3d3d3] text-[#2d2d2d]",
+                    {
+                      "bg-click_sidebar text-green_400":
+                        activeItem === "print2",
+                    }
+                  )}
+                >
+                  <FontAwesomeIcon
+                    className=" mr-5 sm:text-3xl text-xl"
+                    icon={faCaretRight}
+                  />
+                  In ra môn ngành 2
+                </li>
+              </Link>
+            </>
+          )}
         </Link>
         <span
           onMouseEnter={() => setShowTK(true)}

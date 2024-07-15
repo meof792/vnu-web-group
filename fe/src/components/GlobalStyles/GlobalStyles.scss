@@ -36,8 +36,7 @@ button{
   justify-content: center;
 }
   /* Xóa các kiểu mặc định của input */
-  input[type="text"],
-  input[type="password"] {
+  input{
       border: none;                /* Xóa border mặc định */
       outline: none;               /* Xóa outline mặc định */
       padding: 0;                  /* Xóa padding mặc định */
@@ -135,4 +134,5 @@ select:focus {
 }
 td,th,input{
   cursor: pointer;
+  
 }

@@ -26,9 +26,9 @@ function Table() {
       <div className="w-full sm:p-10 sm:text-2xl text-[10px]">
         {/* table đang kí  */}
         <div>
-          <div className="title bg-[#01b437] text-white sm:flex items-center justify-center text-center py-5 sm:px-0 px-2 ">
+          <div className="title bg-green_200 text-white sm:flex items-center justify-center text-center py-5 sm:px-0 px-2 ">
             <div
-              className="relative bg-[#ffffff] sm:w-[200px] w-full h-[30px] flex items-center justify-center text-center text-[#01b437] mr-10 rounded-md cursor-pointer"
+              className="relative bg-[#ffffff] sm:w-[200px] w-full h-[30px] flex items-center justify-center text-center text-[#01b437] mr-10 rounded-md cursor-pointer z-10"
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
@@ -65,14 +65,14 @@ function Table() {
         </div>
         <div className="w-full  sm:flex justify-between mt-10 text-[#fff]">
           <span className="flex sm:mb-0 mb-10">
-            <button className="bg-green_400 px-5 border-[1px] py-6  ">
+            <button className="bg-green_400 px-5 border-[1px] py-3  hover:bg-[red] ">
               Lưu môn học đăng kí{" "}
             </button>
-            <button className="bg-[#2B4CA1] px-5  border-[1px] py-6 ml-10 ">
+            <button className="bg-[#2B4CA1] px-5  border-[1px] py-3 ml-10 hover:opacity-50 ">
               Xem và in
             </button>
           </span>
-          <button className="bg-[#ff00008c] px-5 w-full sm:max-w-[350px] w-full border-[1px] py-6 ">
+          <button className="bg-[#ff00008c] px-5 w-full sm:max-w-[320px] border-[1px] py-3 ">
             Bạn đã đăng kí [ 7 môn ] - [ 23 / 30 tín chỉ ]
           </button>
         </div>

@@ -36,34 +36,36 @@ button{
   justify-content: center;
 }
   /* Xóa các kiểu mặc định của input */
-input {
-    border: none;                /* Xóa border mặc định */
-    outline: none;               /* Xóa outline mặc định */
-    padding: 0;                  /* Xóa padding mặc định */
-    margin: 0;                   /* Xóa margin mặc định */
-    -webkit-appearance: none;    /* Xóa các kiểu mặc định trên trình duyệt WebKit */
-    -moz-appearance: none;       /* Xóa các kiểu mặc định trên Firefox */
-    appearance: none;            /* Xóa các kiểu mặc định */
-}
+  input{
+      border: none;                /* Xóa border mặc định */
+      outline: none;               /* Xóa outline mặc định */
+      padding: 0;                  /* Xóa padding mặc định */
+      margin: 0;                   /* Xóa margin mặc định */
+      -webkit-appearance: none;    /* Xóa các kiểu mặc định trên trình duyệt WebKit */
+      -moz-appearance: none;       /* Xóa các kiểu mặc định trên Firefox */
+      appearance: none;            /* Xóa các kiểu mặc định */
+  }
+  
 
 /* Đảm bảo các input không nhận style mặc định khi được focus */
-input:focus {
-    outline: none;
+input[type ="checkbox"]:focus {
+    border: none;
+    outline: none;      
 }
 
 
 
  input[type="checkbox"] {
-    appearance: none;            /* Xóa các kiểu mặc định */
-    -webkit-appearance: none;    /* Xóa các kiểu mặc định trên trình duyệt WebKit */
-    -moz-appearance: none;       /* Xóa các kiểu mặc định trên Firefox */
-    border: none;                /* Xóa border mặc định */
+    // appearance: none;            /* Xóa các kiểu mặc định */
+    // -webkit-appearance: none;    /* Xóa các kiểu mặc định trên trình duyệt WebKit */
+    // -moz-appearance: none;       /* Xóa các kiểu mặc định trên Firefox */
+    // border: none;                /* Xóa border mặc định */
 }
 
 
  input[type="checkbox"]:checked::before {
-    content: '\2714';            /* Ký tự checkmark Unicode */
-    color: #ffffff;              /* Màu của ký tự checkmark */
+        
+    color: #000000;              /* Màu của ký tự checkmark */
     font-size: 30px;             /* Kích thước của ký tự checkmark */
     background-color: #6cff71;   /* Màu nền của checkbox đã chọn */
     display: flex;
@@ -132,4 +134,5 @@ select:focus {
 }
 td,th,input{
   cursor: pointer;
+  
 }

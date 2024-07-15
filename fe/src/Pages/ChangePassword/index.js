@@ -78,6 +78,7 @@ function ChangePassword() {
           >
             <input
               className="sm:text-3xl text-2xl"
+              autoFocus
               type={typeCurrentPassword}
               placeholder="Mật khẩu hiện tại"
               onChange={(e) => setCurrentPassword(e.target.value)}
@@ -85,7 +86,7 @@ function ChangePassword() {
             <FontAwesomeIcon
               onMouseEnter={() => setTypeCurrentPassword("text")}
               onMouseLeave={() => setTypeCurrentPassword("password")}
-              className="absolute right-5 sm:text-3xl text-2xl text-[#ccc] cursor-pointer"
+              className="absolute right-5 sm:text-3xl text-2xl text-[#ccc] cursor-pointer hover:text-green-500"
               icon={faLock}
             />
             {showPassword.current && (
@@ -110,7 +111,7 @@ function ChangePassword() {
             <FontAwesomeIcon
               onMouseEnter={() => setTypeNewPassword("text")}
               onMouseLeave={() => setTypeNewPassword("password")}
-              className="absolute right-5 sm:text-3xl text-2xl text-[#ccc] cursor-pointer"
+              className="absolute right-5 sm:text-3xl text-2xl text-[#ccc] cursor-pointer hover:text-green-500"
               icon={faLock}
             />
             {showPassword.new && (
@@ -135,7 +136,7 @@ function ChangePassword() {
             <FontAwesomeIcon
               onMouseEnter={() => setTypeRePassword("text")}
               onMouseLeave={() => setTypeRePassword("password")}
-              className="absolute right-5 sm:text-3xl text-2xl text-[#ccc] cursor-pointer"
+              className="absolute right-5 sm:text-3xl text-2xl text-[#ccc] cursor-pointer hover:text-green-500"
               icon={faLock}
             />
             {showPassword.re && (

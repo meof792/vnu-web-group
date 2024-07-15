@@ -8,6 +8,8 @@ module.exports = {
         green_400: "#6AE184",
         yellow_300: "#F7EB7C",
         blue: "#2B4CA1",
+        sidebar: "#d2d2d2",
+        click_sidebar: "#f9f9f9",
       },
     },
   },

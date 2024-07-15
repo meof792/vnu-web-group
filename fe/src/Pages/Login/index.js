@@ -11,8 +11,9 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [acceptTerms, setAcceptTerms] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
   const [showName, setShowName] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [inputType, setInputType] = useState("password");
   const [error, setError] = useState("");
 
   useEffect(() => {}, [acceptTerms]);
@@ -21,13 +22,27 @@ function Login() {
     setShowPassword(false);
     setShowName(false);
     setError("");
-    //
     // Nếu tất cả điều kiện đều đúng, tiếp tục gửi yêu cầu đăng nhập
     try {
       const response = await axios.post("http://127.0.0.1:8000/api/login", {
         username: email,
         password: password,
       });
+
+      if (response.data.success) {
+        if (acceptTerms) {
+          localStorage.setItem("username", email); // Lưu tên người dùng đã đăng nhập toàn cục
+          alert("Đăng nhập thành công!");
+        } else {
+          alert("Bạn chưa xác nhận!");
+        }
+      } else {
+        if (response.data.type === "tk") {
+          setShowName(true);
+          setShowPassword(false);
+        } else {
+          setShowName(false);
+          setShowPassword(true);
       
       if(acceptTerms){
         if (response.data.success) {
@@ -96,6 +111,7 @@ function Login() {
           >
             <input
               className="sm:text-3xl text-2xl"
+              type={inputType}
               type="password"
               placeholder="Mật khẩu"
               value={password || ""}
@@ -103,6 +119,8 @@ function Login() {
             />
 
             <FontAwesomeIcon
+              onMouseEnter={() => setInputType("text")}
+              onMouseLeave={() => setInputType("password")}
               className="absolute right-5 sm:text-3xl text-2xl text-[#ccc]"
               icon={faLock}
             />

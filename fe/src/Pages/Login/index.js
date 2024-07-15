@@ -2,8 +2,9 @@ import classNames from "classnames";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Context from "./Context";
-import { faLock, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import "./Login.scss";
 // add code
 // add code
 
@@ -51,7 +52,7 @@ function Login() {
       console.error("Có lỗi xảy ra!", error);
     }
   };
-
+  console.log(acceptTerms + "checkbox");
   return (
     <div className="wrapper w-full block justify-between md:flex md:mt-0 py-[20px] px-[20px]">
       {/* content */}
@@ -73,6 +74,7 @@ function Login() {
             <input
               className="sm:text-3xl text-2xl "
               type="text"
+              autoFocus
               placeholder="Mã sinh viên"
               value={email || ""}
               onChange={(e) => setEmail(e.target.value)}
@@ -125,13 +127,21 @@ function Login() {
               Đăng Nhập
             </button>
           </div>
-          <div className="bg-[#F5F5F5] p-5 mt-10 flex items-center">
+          <div className=" relative bg-[#F5F5F5] p-5 mt-10 flex items-center">
             <input
-              className="border-2 w-[20px] h-[20px] bg-white text-[#ccc] mr-8 "
+              className=" opacity-0 z-10 border-2 w-[20px] h-[20px] bg-white text-[#ccc] mr-8 "
               type="checkbox"
               checked={acceptTerms}
               onChange={(e) => setAcceptTerms(e.target.checked)}
             />
+            <div className="absolute top-1/2 left-5 transform bg-white -translate-y-1/2 w-[20px] h-[20px]  flex items-center justify-center">
+              {acceptTerms ? (
+                <FontAwesomeIcon
+                  icon={faCheck}
+                  className="text-3xl text-green_400"
+                />
+              ) : null}
+            </div>
             <label className="sm:text-2xl text-xl">
               Hãy chọn để xác nhận bạn là sinh viên VNU
             </label>

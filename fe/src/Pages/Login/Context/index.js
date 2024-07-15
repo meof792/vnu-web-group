@@ -13,7 +13,7 @@ function Context() {
             về trang chủ DUCA
           </button>
         </span>
-        <button className="md:h-[60px] h-[40px] p-[20px] border border-[#ccc] bg-green_400 text-[#fff] md:text-3xl text-[13px] lg:mr-[30px] lg:mt-0 mt-[20px]  hover:scale-110 hover:bg-green_400/70 transition-all">
+        <button className="md:h-[60px] h-[40px] p-[20px] border border-[#ccc] bg-green_400 text-[#fff] md:text-3xl text-[13px] lg:mr-[30px] lg:mt-0 mt-[20px]  transition-all">
           <FontAwesomeIcon className="mr-[10px]" icon={faUsers} />
           <span className="text-[red]">245 online</span>
         </button>

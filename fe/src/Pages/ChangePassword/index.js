@@ -78,6 +78,7 @@ function ChangePassword() {
           >
             <input
               className="sm:text-3xl text-2xl"
+              autoFocus
               type={typeCurrentPassword}
               placeholder="Mật khẩu hiện tại"
               onChange={(e) => setCurrentPassword(e.target.value)}

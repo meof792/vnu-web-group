@@ -28,7 +28,7 @@ function Table() {
         <div>
           <div className="title bg-[#01b437] text-white sm:flex items-center justify-center text-center py-5 sm:px-0 px-2 ">
             <div
-              className="relative bg-[#ffffff] sm:w-[200px] w-full h-[30px] flex items-center justify-center text-center text-[#01b437] mr-10 rounded-md cursor-pointer"
+              className="relative bg-[#ffffff] sm:w-[200px] w-full h-[30px] flex items-center justify-center text-center text-[#01b437] mr-10 rounded-md cursor-pointer z-10"
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >

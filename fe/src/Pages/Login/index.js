@@ -29,36 +29,22 @@ function Login() {
         password: password,
       });
 
-      if (response.data.success) {
-        if (acceptTerms) {
+      if (acceptTerms) {
+        if (response.data.success) {
           localStorage.setItem("username", email); // Lưu tên người dùng đã đăng nhập toàn cục
           alert("Đăng nhập thành công!");
-        } else {
-          alert("Bạn chưa xác nhận!");
-        }
-      } else {
-        if (response.data.type === "tk") {
-          setShowName(true);
-          setShowPassword(false);
-        } else {
-          setShowName(false);
-          setShowPassword(true);
-      
-      if(acceptTerms){
-        if (response.data.success) {
-            localStorage.setItem("username", email); // Lưu tên người dùng đã đăng nhập toàn cục
-            alert("Đăng nhập thành công!");
         } else {
           if (response.data.type === "tk") {
             setShowName(true);
             setShowPassword(false);
+            setError(response.data.msg);
           } else {
             setShowName(false);
             setShowPassword(true);
+            setError(response.data.msg);
           }
-          setError(response.data.msg);
         }
-      }else{
+      } else {
         alert("Bạn chưa xác nhận!");
       }
     } catch (error) {
@@ -111,7 +97,6 @@ function Login() {
           >
             <input
               className="sm:text-3xl text-2xl"
-              type={inputType}
               type="password"
               placeholder="Mật khẩu"
               value={password || ""}

@@ -1,7 +1,7 @@
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import RegistrationBoard from "../../components/Layouts/Layout/registrationBoard";
-import ResultBoard from "../../components/Layouts/Layout/resultBoard";
+import RegistrationBoard from "./registrationBoard";
+import ResultBoard from "./resultBoard";
 import { useState } from "react";
 function Table() {
   const [show, setShow] = useState(false);

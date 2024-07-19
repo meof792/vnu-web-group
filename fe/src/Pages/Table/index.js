@@ -2,11 +2,19 @@ import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import RegistrationBoard from "./registrationBoard";
 import ResultBoard from "./resultBoard";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { reultBoard } from "../../redux/selector";
+
 function Table() {
   const [show, setShow] = useState(false);
   const [specialized1, setSpecialized1] = useState("Toàn trường");
   const [specialized2, setSpecialized2] = useState("Ngành học");
+  const tc = useSelector(reultBoard);
+  const [credits, setCredits] = useState(0);
+  useEffect(() => {
+    setCredits(tc);
+  });
   const handleMouseEnter = () => {
     setShow(true);
   };
@@ -46,7 +54,10 @@ function Table() {
             <span>
               ĐĂNG KÍ MÔN HỌC NGÀNH 1 : KỲ - NĂM HỌC : 2025 - 2026 | Số tín chỉ
               đã chọn [{" "}
-              <span className="text-[red] relative top-[1.5px]">0/40</span>]
+              <span className="text-[red] relative top-[1.5px]">
+                {credits}/10
+              </span>
+              ]
             </span>
           </div>
           <div>

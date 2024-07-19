@@ -22,7 +22,7 @@ function Sidebar() {
     const currentUrl = location.pathname;
     const urlSegments = currentUrl.split("/");
     const lastSegment = urlSegments[urlSegments.length - 1];
-    console.log(lastSegment);
+   
     setActiveItem(lastSegment);
     setShowStates(() => ({
       show: lastSegment === "1" || lastSegment === "2",

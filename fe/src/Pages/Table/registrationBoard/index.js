@@ -1,12 +1,19 @@
-import { useState, useEffect, useMemo, useRef, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
 import { handleCheckbox } from "./registrationBoardSlice";
+import { reultBoard } from "../../../redux/selector";
 import { registrationBoard } from "../../../redux/selector";
+// import { reultBoard } from "../../../redux/selector";
 
 function RegistrationBoard() {
+  const [disabledInput, setDisabledInput] = useState(false);
+  const [disabledUser, setDisabledUser] = useState(false);
+  const dispatch = useDispatch();
+  const datas = useSelector(registrationBoard);
+  const result = useSelector(reultBoard);
   const data = [
     {
       id: 1,
@@ -119,8 +126,42 @@ function RegistrationBoard() {
       late: "T3 (5-6) - 110I2, T5 (7-9) - 210J1",
     },
   ];
-  const dispatch = useDispatch();
-  const datas = useSelector(registrationBoard);
+
+  const dataUser = [
+    {
+      id: 1,
+      subject: "Tin học đại cương",
+      credit: "MAT 2345",
+      class: "2",
+      teacher: "Nguyễn Thế Công",
+      student: "110",
+      attend: "110",
+      money: "375.000",
+      late: "T2 (6-7) -100T5, T3 (8-10) - 100-Y7",
+    },
+    {
+      id: 2,
+      subject: "Lập trình C++",
+      credit: "CSE 1234",
+      class: "1",
+      teacher: "Phạm Văn A",
+      student: "90",
+      attend: "85",
+      money: "400.000",
+      late: "T4 (3-5) - 101T3, T6 (6-8) - 202A2",
+    },
+  ];
+  // nếu số tín vượt quá quy đinh:
+  useEffect(() => {
+    if (result > 10) {
+      setDisabledInput(true);
+      alert(
+        "bạn đã đăng kí quá số tín chỉ cho phép vui lòng xóa môn ở phần danh sách chọn"
+      );
+    } else {
+      setDisabledInput(false);
+    }
+  }, [result]);
 
   // State lưu các id của checkbox đã được chọn
   const [checkedIds, setCheckedIds] = useState([]);
@@ -158,73 +199,112 @@ function RegistrationBoard() {
     },
     [data, dispatch]
   );
+
   // Hàm kiểm tra xem id có trong datas không
   const isIdMatching = (id) => {
     return datas.some((ds) => ds.id === id);
   };
+  const isDuplicate = (id) => {
+    return dataUser.some((item) => item.id === id);
+  };
 
   return (
-    <div className="h-[285px] overflow-y-auto overflow-x-auto">
-      <table className="w-full min-w-[800px] border-[1px] sm:text-xl text-[10px]">
-        <thead>
-          <tr>
-            <th className="border-[1px] p-5 text-[#000]">Chọn</th>
-            <th className="border-[1px] p-5 text-[#000]">Mã môn</th>
-            <th className="border-[1px] p-5 text-[#000]">Tên Môn</th>
-            <th className="border-[1px] p-5 text-[#000]">TC</th>
-            <th className="border-[1px] p-5 text-[#000]">Tên giảng viên</th>
-            <th className="border-[1px] p-5 text-[#000]">Tổng SV</th>
-            <th className="border-[1px] p-5 text-[#000]">Đã Đk</th>
-            <th className="border-[1px] p-5 text-[#000]">Học phí / Tín</th>
-            <th className="border-[1px] p-5 text-[#000]">Lịch học</th>
-          </tr>
-        </thead>
-
-        <tbody className="max-h-[300px] overflow-y-auto">
-          {data.map((item) => (
-            <tr key={item.id} className="h-[25px]">
-              <td className="relative text-center flex h-[25px] border-[1px]">
-                <input
-                  className="z-10 w-full h-[100%] checkbox opacity-0"
-                  type="checkbox"
-                  checked={checkedIds.includes(item.id)}
-                  value={item.id}
-                  onChange={() => handleCheckboxChange(item.id)}
-                />
-                <div
-                  className={classNames(
-                    "absolute w-full h-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center border-none",
-                    {
-                      "bg-green_200": isIdMatching(item.id),
-                      "bg-white": !isIdMatching(item.id),
-                    }
-                  )}
-                >
-                  {isIdMatching(item.id) ? (
-                    <FontAwesomeIcon
-                      icon={faCheck}
-                      className="text-4xl text-white"
-                    />
-                  ) : null}
-                </div>
-              </td>
-              <td className="text-center border-[1px] h-full">{item.credit}</td>
-              <td className="text-center border-[1px] h-full">
-                {item.subject}
-              </td>
-              <td className="text-center border-[1px] h-full">{item.class}</td>
-              <td className="text-center border-[1px] h-full">
-                {item.teacher}
-              </td>
-              <td className="text-center border-[1px] h-full">110</td>
-              <td className="text-center border-[1px] h-full">110</td>
-              <td className="text-center border-[1px] h-full">375.000</td>
-              <td className="text-center border-[1px] h-full">{item.late}</td>
+    <>
+      <div className="h-[285px] overflow-y-auto overflow-x-auto">
+        <table className="w-full min-w-[800px] border-[1px] sm:text-xl text-[10px]">
+          <thead>
+            <tr>
+              <th className="border-[1px] p-5 text-[#000]">Chọn</th>
+              <th className="border-[1px] p-5 text-[#000]">Mã môn</th>
+              <th className="border-[1px] p-5 text-[#000]">Tên Môn</th>
+              <th className="border-[1px] p-5 text-[#000]">TC</th>
+              <th className="border-[1px] p-5 text-[#000]">Tên giảng viên</th>
+              <th className="border-[1px] p-5 text-[#000]">Tổng SV</th>
+              <th className="border-[1px] p-5 text-[#000]">Đã Đk</th>
+              <th className="border-[1px] p-5 text-[#000]">Học phí / Tín</th>
+              <th className="border-[1px] p-5 text-[#000]">Lịch học</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+
+          <tbody className="max-h-[300px] overflow-y-auto">
+            {data.map((item) => (
+              <tr
+                key={item.id}
+                className={classNames("h-[25px]", {
+                  "bg-[#ff1717]": disabledInput,
+                  // "bg-[#dbff10]": isDuplicate(item.id) && !disabledInput,
+                  "bg-green_200 text-white":
+                    (isIdMatching(item.id) && !disabledInput) ||
+                    (isDuplicate(item.id) && !disabledInput),
+                })}
+              >
+                <td className="relative text-center flex h-[25px] border-[1px]">
+                  <input
+                    className="z-10 w-full h-[100%] checkbox opacity-0"
+                    type="checkbox"
+                    disabled={disabledInput || isDuplicate(item.id)}
+                    checked={checkedIds.includes(item.id)}
+                    value={item.id}
+                    onChange={() => handleCheckboxChange(item.id)}
+                  />
+                  <div
+                    className={classNames(
+                      "absolute w-full h-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center border-none",
+                      {
+                        "bg-green_200":
+                          (isIdMatching(item.id) && !disabledInput) ||
+                          (isDuplicate(item.id) && !disabledInput),
+                        // "bg-white": !isIdMatching(item.id) && !disabledInput,
+                        // "bg-[#dbff10]": isDuplicate(item.id) && !disabledInput,
+                        "bg-[#ccc]": disabledInput,
+                      }
+                    )}
+                  >
+                    {" "}
+                    {isDuplicate(item.id) && (
+                      <span className="font-bold text-[red] ">
+                        <FontAwesomeIcon
+                          icon={faCheck}
+                          className="text-4xl text-white"
+                        />
+                      </span>
+                    )}
+                    {isIdMatching(item.id) ? (
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        className="text-4xl text-white"
+                      />
+                    ) : null}
+                  </div>
+                </td>
+                <td className="text-center border-[1px] h-full">
+                  {item.credit}
+                </td>
+                <td className="text-center border-[1px] h-full">
+                  {item.subject}
+                </td>
+                <td className="text-center border-[1px] h-full">
+                  {item.class}
+                </td>
+                <td className="text-center border-[1px] h-full">
+                  {item.teacher}
+                </td>
+                <td className="text-center border-[1px] h-full">110</td>
+                <td className="text-center border-[1px] h-full">110</td>
+                <td className="text-center border-[1px] h-full">375.000</td>
+                <td className="text-center border-[1px] h-full">{item.late}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {disabledInput && (
+        <div className="text-red-500 p-4 font-bold mt-10 border-[1px] border-[red] w-[300px] flex justify-center">
+          {" "}
+          Hãy giảm bớt môn trong danh sách{" "}
+        </div>
+      )}
+    </>
   );
 }
 

@@ -157,44 +157,26 @@ function RegistrationBoard() {
   const [checkedIds, setCheckedIds] = useState([]);
 
   // Effect để đồng bộ hóa checkedIds với datas khi datas thay đổi
-  const filteredCheckedIds = useMemo(() => {
-    const idsFromDatas = datas.map((item) => item.id);
-    return checkedIds.filter((id) => idsFromDatas.includes(id));
-  }, [datas, checkedIds]);
   useEffect(() => {
-    if (checkedIds.length !== filteredCheckedIds.length) {
-      setCheckedIds(filteredCheckedIds);
-    }
-  }, [filteredCheckedIds, checkedIds]);
+    const idsFromDatas = datas.map((item) => item.id);
+    const newCheckedIds = checkedIds.filter((id) => idsFromDatas.includes(id));
+    setCheckedIds(newCheckedIds);
+  }, [datas]);
 
   // Hàm xử lý thay đổi checkbox
-  const handleCheckboxChange = useCallback(
-    (id) => {
-      setCheckedIds((prevCheckedIds) => {
-        const isChecked = prevCheckedIds.includes(id);
-        const newCheckedIds = isChecked
-          ? prevCheckedIds.filter((checkedId) => checkedId !== id)
-          : [...prevCheckedIds, id];
+  const handleCheckboxChange = (id) => {
+    const isChecked = checkedIds.includes(id);
+    const newCheckedIds = isChecked
+      ? checkedIds.filter((checkedId) => checkedId !== id)
+      : [...checkedIds, id];
+    setCheckedIds(newCheckedIds);
+  };
 
-        // Dispatch action khi cần thiết
-        const checkedData = data.filter((item) =>
-          newCheckedIds.includes(item.id)
-        );
-
-        const checkbox_End = checkedData[checkedData.length - 1].class;
-        const checkTC = checkedData.length > 0 && result + +checkbox_End < 11;
-        if (checkTC) {
-          dispatch(handleCheckbox(checkedData));
-          console.log(checkedData);
-        } else {
-          alert("bạn đã đang kí quá số môn quy định");
-        }
-
-        return newCheckedIds;
-      });
-    },
-    [result]
-  );
+  // Effect để gửi danh sách các checkbox đã chọn lên store
+  useEffect(() => {
+    const checkedData = data.filter((item) => checkedIds.includes(item.id));
+    dispatch(handleCheckbox(checkedData));
+  }, [checkedIds, dispatch]);
 
   // Hàm kiểm tra xem id có trong datas không
   const isIdMatching = (id) => {

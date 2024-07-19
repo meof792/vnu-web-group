@@ -11,6 +11,7 @@ const registrationBoardSlice = createSlice({
     handleCheckbox: (state, action) => {
       state.registrationBoard = action.payload;
     },
+
     removeItem: (state, action) => {
       state.registrationBoard = state.registrationBoard.filter(
         (item, index) => index !== action.payload

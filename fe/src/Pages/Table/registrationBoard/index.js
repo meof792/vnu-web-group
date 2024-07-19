@@ -6,14 +6,15 @@ import classNames from "classnames";
 import { handleCheckbox } from "./registrationBoardSlice";
 import { reultBoard } from "../../../redux/selector";
 import { registrationBoard } from "../../../redux/selector";
+
 // import { reultBoard } from "../../../redux/selector";
 
 function RegistrationBoard() {
-  const [disabledInput, setDisabledInput] = useState(false);
-  const [disabledUser, setDisabledUser] = useState(false);
   const dispatch = useDispatch();
   const datas = useSelector(registrationBoard);
   const result = useSelector(reultBoard);
+  const [dataTmp, setDataTmp] = useState([]);
+
   const data = [
     {
       id: 1,
@@ -151,17 +152,6 @@ function RegistrationBoard() {
       late: "T4 (3-5) - 101T3, T6 (6-8) - 202A2",
     },
   ];
-  // nếu số tín vượt quá quy đinh:
-  useEffect(() => {
-    if (result > 10) {
-      setDisabledInput(true);
-      alert(
-        "bạn đã đăng kí quá số tín chỉ cho phép vui lòng xóa môn ở phần danh sách chọn"
-      );
-    } else {
-      setDisabledInput(false);
-    }
-  }, [result]);
 
   // State lưu các id của checkbox đã được chọn
   const [checkedIds, setCheckedIds] = useState([]);
@@ -175,7 +165,7 @@ function RegistrationBoard() {
     if (checkedIds.length !== filteredCheckedIds.length) {
       setCheckedIds(filteredCheckedIds);
     }
-  }, [filteredCheckedIds]);
+  }, [filteredCheckedIds, checkedIds]);
 
   // Hàm xử lý thay đổi checkbox
   const handleCheckboxChange = useCallback(
@@ -190,14 +180,20 @@ function RegistrationBoard() {
         const checkedData = data.filter((item) =>
           newCheckedIds.includes(item.id)
         );
-        if (checkedData.length > 0) {
+
+        const checkbox_End = checkedData[checkedData.length - 1].class;
+        const checkTC = checkedData.length > 0 && result + +checkbox_End < 11;
+        if (checkTC) {
           dispatch(handleCheckbox(checkedData));
+          console.log(checkedData);
+        } else {
+          alert("bạn đã đang kí quá số môn quy định");
         }
 
         return newCheckedIds;
       });
     },
-    [data, dispatch]
+    [result]
   );
 
   // Hàm kiểm tra xem id có trong datas không
@@ -231,18 +227,15 @@ function RegistrationBoard() {
               <tr
                 key={item.id}
                 className={classNames("h-[25px]", {
-                  "bg-[#ff1717]": disabledInput,
-                  // "bg-[#dbff10]": isDuplicate(item.id) && !disabledInput,
                   "bg-green_200 text-white":
-                    (isIdMatching(item.id) && !disabledInput) ||
-                    (isDuplicate(item.id) && !disabledInput),
+                    isIdMatching(item.id) || isDuplicate(item.id),
                 })}
               >
                 <td className="relative text-center flex h-[25px] border-[1px]">
                   <input
                     className="z-10 w-full h-[100%] checkbox opacity-0"
                     type="checkbox"
-                    disabled={disabledInput || isDuplicate(item.id)}
+                    disabled={isDuplicate(item.id)}
                     checked={checkedIds.includes(item.id)}
                     value={item.id}
                     onChange={() => handleCheckboxChange(item.id)}
@@ -252,11 +245,7 @@ function RegistrationBoard() {
                       "absolute w-full h-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center border-none",
                       {
                         "bg-green_200":
-                          (isIdMatching(item.id) && !disabledInput) ||
-                          (isDuplicate(item.id) && !disabledInput),
-                        // "bg-white": !isIdMatching(item.id) && !disabledInput,
-                        // "bg-[#dbff10]": isDuplicate(item.id) && !disabledInput,
-                        "bg-[#ccc]": disabledInput,
+                          isIdMatching(item.id) || isDuplicate(item.id),
                       }
                     )}
                   >
@@ -298,12 +287,6 @@ function RegistrationBoard() {
           </tbody>
         </table>
       </div>
-      {disabledInput && (
-        <div className="text-red-500 p-4 font-bold mt-10 border-[1px] border-[red] w-[300px] flex justify-center">
-          {" "}
-          Hãy giảm bớt môn trong danh sách{" "}
-        </div>
-      )}
     </>
   );
 }

@@ -8,26 +8,52 @@ import { removeItem } from "../registrationBoard/registrationBoardSlice";
 import { tc } from "./ReultBoardSlice";
 
 function ResultBoard() {
+  const dataUser = [
+    {
+      id: 1,
+      subject: "Tin học đại cương",
+      credit: "MAT 2345",
+      class: "2",
+      teacher: "Nguyễn Thế Công",
+      student: "110",
+      attend: "110",
+      money: "375.000",
+      late: "T2 (6-7) -100T5, T3 (8-10) - 100-Y7",
+    },
+    {
+      id: 2,
+      subject: "Lập trình C++",
+      credit: "CSE 1234",
+      class: "1",
+      teacher: "Phạm Văn A",
+      student: "90",
+      attend: "85",
+      money: "400.000",
+      late: "T4 (3-5) - 101T3, T6 (6-8) - 202A2",
+    },
+  ];
   const data = useSelector(registrationBoard);
+
   const dispatch = useDispatch();
   const handleRemove = (index) => {
-    dispatch(removeItem(index));
+    dispatch(removeItem(index - dataUser.length));
   };
 
   // Sử dụng useMemo để tính toán tổng tín chỉ chỉ khi data thay đổi
+  const dataUsersS = useMemo(() => [...dataUser, ...data], [dataUser, data]);
+  // Tính toán tổng tín chỉ chỉ khi dataUsersS thay đổi
   const totalCredits = useMemo(() => {
-    return data.reduce((sum, item) => {
+    return dataUsersS.reduce((sum, item) => {
       const credits = parseInt(item.class, 10); // Chuyển đổi từ string thành số
       return sum + (isNaN(credits) ? 0 : credits);
     }, 0);
-  }, [data]);
+  }, [dataUsersS]);
 
   // Thay console.log bằng một useEffect để log totalCredits khi nó thay đổi
   useEffect(() => {
-    console.log(totalCredits + "tín chỉ");
-    console.log(data.length + "môn");
     dispatch(tc(totalCredits));
-  }, [totalCredits]);
+    console.log(totalCredits, "data chuyền đi");
+  }, [totalCredits, dispatch]);
 
   return (
     <div className="max-h-[300px] overflow-y-auto overflow-x-auto sm:text-xl text-[10px] ">
@@ -47,8 +73,8 @@ function ResultBoard() {
 
         <tbody className="max-h-[300px] overflow-y-auto">
           {data &&
-            data.map((item, index) => (
-              <tr className="h-[25px]">
+            dataUsersS.map((item, index) => (
+              <tr key={index} className="h-[25px]">
                 <td className="text-center  border-[1px]  h-full">
                   {index + 1}
                 </td>

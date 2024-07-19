@@ -5,6 +5,7 @@ import ResultBoard from "./resultBoard";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { reultBoard } from "../../redux/selector";
+import { dataUser } from "../../redux/selector";
 
 function Table() {
   const [show, setShow] = useState(false);
@@ -12,6 +13,7 @@ function Table() {
   const [specialized2, setSpecialized2] = useState("Ngành học");
   const tc = useSelector(reultBoard);
   const [credits, setCredits] = useState(0);
+  const dataUsers = useSelector(dataUser);
   useEffect(() => {
     setCredits(tc);
   });

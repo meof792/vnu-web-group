@@ -6,53 +6,31 @@ import { registrationBoard } from "../../../redux/selector";
 import { useDispatch } from "react-redux";
 import { removeItem } from "../registrationBoard/registrationBoardSlice";
 import { tc } from "./ReultBoardSlice";
+import { dataUser } from "../../../API/data";
 
 function ResultBoard() {
-  const dataUser = [
-    {
-      id: 1,
-      subject: "Tin học đại cương",
-      credit: "MAT 2345",
-      class: "2",
-      teacher: "Nguyễn Thế Công",
-      student: "110",
-      attend: "110",
-      money: "375.000",
-      late: "T2 (6-7) -100T5, T3 (8-10) - 100-Y7",
-    },
-    {
-      id: 2,
-      subject: "Lập trình C++",
-      credit: "CSE 1234",
-      class: "1",
-      teacher: "Phạm Văn A",
-      student: "90",
-      attend: "85",
-      money: "400.000",
-      late: "T4 (3-5) - 101T3, T6 (6-8) - 202A2",
-    },
-  ];
   const data = useSelector(registrationBoard);
-
   const dispatch = useDispatch();
+
   const handleRemove = (index) => {
     dispatch(removeItem(index - dataUser.length));
   };
 
-  // Sử dụng useMemo để tính toán tổng tín chỉ chỉ khi data thay đổi
+  // Sử dụng useMemo để tính toán tổng tín chỉ chỉ khi data hoặc dataUser thay đổi
   const dataUsersS = useMemo(() => [...dataUser, ...data], [dataUser, data]);
+
   // Tính toán tổng tín chỉ chỉ khi dataUsersS thay đổi
   const totalCredits = useMemo(() => {
     return dataUsersS.reduce((sum, item) => {
-      const credits = parseInt(item.class, 10); // Chuyển đổi từ string thành số
+      const credits = +item.class; // Chuyển đổi từ string thành số
       return sum + (isNaN(credits) ? 0 : credits);
     }, 0);
   }, [dataUsersS]);
 
   // Thay console.log bằng một useEffect để log totalCredits khi nó thay đổi
   useEffect(() => {
+    console.log("số môn đã đăng kí : " + totalCredits);
     dispatch(tc(totalCredits));
-    console.log(totalCredits, "data chuyền đi");
   }, [totalCredits, dispatch]);
 
   return (

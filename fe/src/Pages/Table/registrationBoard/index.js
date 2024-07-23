@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
@@ -6,178 +6,54 @@ import classNames from "classnames";
 import { handleCheckbox } from "./registrationBoardSlice";
 import { reultBoard } from "../../../redux/selector";
 import { registrationBoard } from "../../../redux/selector";
-
-// import { reultBoard } from "../../../redux/selector";
+import { data } from "../../../API/data";
+import { dataUser } from "../../../API/data";
 
 function RegistrationBoard() {
   const dispatch = useDispatch();
   const datas = useSelector(registrationBoard);
-  const result = useSelector(reultBoard);
-  const [dataTmp, setDataTmp] = useState([]);
-
-  const data = [
-    {
-      id: 1,
-      subject: "Tin học đại cương",
-      credit: "MAT 2345",
-      class: "2",
-      teacher: "Nguyễn Thế Công",
-      student: "110",
-      attend: "110",
-      money: "375.000",
-      late: "T2 (6-7) -100T5, T3 (8-10) - 100-Y7",
-    },
-    {
-      id: 2,
-      subject: "Lập trình C++",
-      credit: "CSE 1234",
-      class: "1",
-      teacher: "Phạm Văn A",
-      student: "90",
-      attend: "85",
-      money: "400.000",
-      late: "T4 (3-5) - 101T3, T6 (6-8) - 202A2",
-    },
-    {
-      id: 3,
-      subject: "Cấu trúc dữ liệu",
-      credit: "CSE 2345",
-      class: "3",
-      teacher: "Lê Thị B",
-      student: "80",
-      attend: "78",
-      money: "350.000",
-      late: "T3 (1-2) - 103A3, T5 (4-6) - 203B1",
-    },
-    {
-      id: 4,
-      subject: "Toán rời rạc",
-      credit: "MAT 3456",
-      class: "2",
-      teacher: "Trần Văn C",
-      student: "100",
-      attend: "95",
-      money: "380.000",
-      late: "T2 (5-6) - 104B2, T4 (7-9) - 204C2",
-    },
-    {
-      id: 5,
-      subject: "Lý thuyết đồ thị",
-      credit: "CSE 4567",
-      class: "1",
-      teacher: "Nguyễn Văn D",
-      student: "70",
-      attend: "65",
-      money: "360.000",
-      late: "T5 (2-3) - 105D1, T6 (4-5) - 205E3",
-    },
-    {
-      id: 6,
-      subject: "Kỹ thuật lập trình",
-      credit: "CSE 5678",
-      class: "2",
-      teacher: "Vũ Thị E",
-      student: "85",
-      attend: "82",
-      money: "390.000",
-      late: "T3 (6-7) - 106E2, T5 (8-10) - 206F2",
-    },
-    {
-      id: 7,
-      subject: "Quản lý dự án",
-      credit: "BUS 6789",
-      class: "1",
-      teacher: "Phan Văn F",
-      student: "75",
-      attend: "72",
-      money: "370.000",
-      late: "T4 (1-2) - 107F1, T6 (3-5) - 207G1",
-    },
-    {
-      id: 8,
-      subject: "Cơ sở dữ liệu",
-      credit: "CSE 7890",
-      class: "3",
-      teacher: "Lê Thị G",
-      student: "95",
-      attend: "90",
-      money: "400.000",
-      late: "T2 (4-5) - 108G3, T4 (6-7) - 208H2",
-    },
-    {
-      id: 9,
-      subject: "Lập trình web",
-      credit: "CSE 8901",
-      class: "2",
-      teacher: "Ngô Văn H",
-      student: "88",
-      attend: "84",
-      money: "385.000",
-      late: "T5 (1-2) - 109H1, T6 (2-3) - 209I3",
-    },
-    {
-      id: 10,
-      subject: "Mạng máy tính",
-      credit: "CSE 9012",
-      class: "1",
-      teacher: "Trần Thị I",
-      student: "65",
-      attend: "60",
-      money: "350.000",
-      late: "T3 (5-6) - 110I2, T5 (7-9) - 210J1",
-    },
-  ];
-
-  const dataUser = [
-    {
-      id: 1,
-      subject: "Tin học đại cương",
-      credit: "MAT 2345",
-      class: "2",
-      teacher: "Nguyễn Thế Công",
-      student: "110",
-      attend: "110",
-      money: "375.000",
-      late: "T2 (6-7) -100T5, T3 (8-10) - 100-Y7",
-    },
-    {
-      id: 2,
-      subject: "Lập trình C++",
-      credit: "CSE 1234",
-      class: "1",
-      teacher: "Phạm Văn A",
-      student: "90",
-      attend: "85",
-      money: "400.000",
-      late: "T4 (3-5) - 101T3, T6 (6-8) - 202A2",
-    },
-  ];
+  const reult = useSelector(reultBoard);
 
   // State lưu các id của checkbox đã được chọn
   const [checkedIds, setCheckedIds] = useState([]);
 
-  // Effect để đồng bộ hóa checkedIds với datas khi datas thay đổi
+  // cập nhập checkbox
   useEffect(() => {
-    const idsFromDatas = datas.map((item) => item.id);
-    const newCheckedIds = checkedIds.filter((id) => idsFromDatas.includes(id));
-    setCheckedIds(newCheckedIds);
-  }, [datas]);
+    const dataUpdate = datas.map((item) => item.id);
+    if (checkedIds.length !== dataUpdate.length) {
+      setCheckedIds(dataUpdate);
+    }
+  }, [datas, checkedIds]);
 
   // Hàm xử lý thay đổi checkbox
-  const handleCheckboxChange = (id) => {
-    const isChecked = checkedIds.includes(id);
-    const newCheckedIds = isChecked
-      ? checkedIds.filter((checkedId) => checkedId !== id)
-      : [...checkedIds, id];
-    setCheckedIds(newCheckedIds);
-  };
+  const handleCheckboxChange = useCallback(
+    (id) => {
+      setCheckedIds((prevCheckedIds) => {
+        const isChecked = prevCheckedIds.includes(id);
+        const newCheckedIds = isChecked
+          ? prevCheckedIds.filter((checkedId) => checkedId !== id)
+          : [...prevCheckedIds, id];
 
-  // Effect để gửi danh sách các checkbox đã chọn lên store
-  useEffect(() => {
-    const checkedData = data.filter((item) => checkedIds.includes(item.id));
-    dispatch(handleCheckbox(checkedData));
-  }, [checkedIds, dispatch]);
+        // Lấy danh sách các mục đã chọn
+        const checkedData = data.filter((item) =>
+          newCheckedIds.includes(item.id)
+        );
 
+        // Kiểm tra và dispatch hành động nếu cần thiết
+        if (
+          checkedData.length > 0 &&
+          reult + +checkedData[checkedData.length - 1].class < 11
+        ) {
+          dispatch(handleCheckbox(checkedData));
+        } else {
+          alert("quá khố tín quy định");
+        }
+
+        return newCheckedIds;
+      });
+    },
+    [data, dispatch, reult]
+  );
   // Hàm kiểm tra xem id có trong datas không
   const isIdMatching = (id) => {
     return datas.some((ds) => ds.id === id);
@@ -217,7 +93,7 @@ function RegistrationBoard() {
                   <input
                     className="z-10 w-full h-[100%] checkbox opacity-0"
                     type="checkbox"
-                    disabled={isDuplicate(item.id)}
+                    disabled={isIdMatching(item.id) || isDuplicate(item.id)}
                     checked={checkedIds.includes(item.id)}
                     value={item.id}
                     onChange={() => handleCheckboxChange(item.id)}

@@ -42,7 +42,7 @@ function Home() {
               3 . Trang web hướng dẫn sinh viên hoàn thành những thủ túc cần
               thiết
             </li>
-          </ul>{" "}
+          </ul>
           <ul className="mt-8">
             <li className=" mt-3 text-[red]">Cập nhập dữ liệu</li>
             <li className=" mt-3 mx-3">

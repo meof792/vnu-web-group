@@ -2,9 +2,18 @@ import Header from "../../component/Header";
 import Footer from "../../component/Footer";
 import Sidebar from "../../component/Sidebar";
 import { useNavigate } from "react-router-dom"; 
+import { useEffect } from "react";
 function Layout({ children }) {
   const navigate = useNavigate();
-  navigate("/table/1");
+
+  const userName = localStorage.getItem("username");
+
+  useEffect(() => {
+    if (!userName) {
+      alert("Vui lý nhap thong tin");
+      navigate("/");
+    }
+  }, [userName, navigate]);
   return (
     <div className="min-h-[100vh] flex flex-col">
       <Header />

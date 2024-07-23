@@ -1,11 +1,11 @@
 import classNames from "classnames";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Context from "./Context";
 import { faCheck, faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import "./Login.scss";
-import { useNavigate } from "react-router-dom"; 
 function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLocation } from "react-router-dom";
 import classNames from "classnames";
+import { useNavigate } from "react-router-dom";
 import {
   faCaretRight,
   faDownload,
@@ -17,6 +18,9 @@ function Sidebar() {
   const location = useLocation();
   const [activeItem, setActiveItem] = useState("home");
   const [showTK, setShowTK] = useState(false);
+
+  const userName = localStorage.getItem("username");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const currentUrl = location.pathname;
@@ -34,6 +38,11 @@ function Sidebar() {
     show1: false,
     show2: false,
   });
+
+  const logout = () => {
+    localStorage.removeItem("username");
+    navigate("/");
+  };
 
   const handleClick = (key) => {
     setShowStates((prevState) => ({
@@ -181,8 +190,7 @@ function Sidebar() {
           onMouseLeave={() => setShowTK(false)}
         >
           <ul className=" relative w-full flex flex-col items-center px-5 bg-green_400  py-3 text-white border-[1px]">
-            <li className="py-1">Phạm Thế Phong </li>
-            <li className="py-1">MSV : 20000577</li>
+            <li className="py-1">MSV : {userName}</li>
             <FontAwesomeIcon
               className="absolute left-7 top-10 sm:text-3xl text-xl"
               icon={faUser}
@@ -191,11 +199,12 @@ function Sidebar() {
 
           {showTK && (
             <ul className="transition transition-all duration-300">
-              <li className="bg-green_400 h-[40px] flex items-center pl-5  text-white border-[1px]">
-                <Link to={"/"}>
-                  <FontAwesomeIcon className="mr-4" icon={faRightFromBracket} />
-                  Đăng Xuất
-                </Link>
+              <li
+                onClick={() => logout()}
+                className="bg-green_400 h-[40px] flex items-center pl-5  text-white border-[1px]"
+              >
+                <FontAwesomeIcon className="mr-4" icon={faRightFromBracket} />
+                Đăng Xuất
               </li>
               <Link to={"/change-password"}>
                 <li className="bg-green_400 h-[40px] flex items-center pl-5  text-white border-[1px]">

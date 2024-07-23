@@ -1,8 +1,10 @@
 import Header from "../../component/Header";
 import Footer from "../../component/Footer";
 import Sidebar from "../../component/Sidebar";
-
+import { useNavigate } from "react-router-dom"; 
 function Layout({ children }) {
+  const navigate = useNavigate();
+  navigate("/table/1");
   return (
     <div className="min-h-[100vh] flex flex-col">
       <Header />

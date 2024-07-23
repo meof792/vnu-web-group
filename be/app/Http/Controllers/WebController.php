@@ -17,7 +17,8 @@ class WebController extends Controller
     //
     public function subject(Request $request)
     {
-        $username = $request->input('username');
+        // $username = $request->input('username');
+        $username = "20000200";
         $user = UserWeb::where('username', $username)->first();
         $subject1 = Subject::all();
         $subject1->each(function ($sub) {

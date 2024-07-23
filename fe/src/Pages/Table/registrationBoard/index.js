@@ -8,8 +8,22 @@ import { reultBoard } from "../../../redux/selector";
 import { registrationBoard } from "../../../redux/selector";
 import { data } from "../../../API/data";
 import { dataUser } from "../../../API/data";
+import axios from "axios";
 
 function RegistrationBoard() {
+  const [data2, setData2] = useState([]);
+  const [data1, setData1] = useState([]);
+
+  try {
+    const response = axios.get("http://127.0.0.1:8000/api/subject", {
+      username: localStorage.getItem("username"),
+    });
+    setData2(response.data.subject1);
+    setData1(response.data.subject2);
+  } catch (error) {
+    console.error("Có lỗi xảy ra!", error);
+  }
+
   const dispatch = useDispatch();
   const datas = useSelector(registrationBoard);
   const reult = useSelector(reultBoard);

@@ -61,6 +61,7 @@ function RegistrationBoard() {
   const isDuplicate = (id) => {
     return dataUser.some((item) => item.id === id);
   };
+  console.log(checkedIds + "dữ liệu chuyền đi");
 
   return (
     <>

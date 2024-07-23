@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Context from "./Context";
 import { faCheck, faLock, faUser } from "@fortawesome/free-solid-svg-icons";
@@ -7,6 +8,7 @@ import axios from "axios";
 import "./Login.scss";
 
 function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [acceptTerms, setAcceptTerms] = useState(false);
@@ -31,6 +33,7 @@ function Login() {
         if (response.data.success) {
           localStorage.setItem("username", email); // Lưu tên người dùng đã đăng nhập toàn cục
           alert("Đăng nhập thành công!");
+          navigate("/table/1");
         } else {
           if (response.data.type === "tk") {
             setShowName(true);

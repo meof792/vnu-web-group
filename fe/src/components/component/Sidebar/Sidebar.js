@@ -32,11 +32,14 @@ function Sidebar() {
       show2: lastSegment === "print",
     }));
   }, [location]);
-  const [showStates, setShowStates] = useState({
-    show: false,
-    show1: false,
-    show2: false,
-  });
+  const [showStates, setShowStates] = useState(
+    {
+      show: false,
+      show1: false,
+      show2: false,
+    },
+    [location]
+  );
 
   const logout = () => {
     localStorage.removeItem("username");

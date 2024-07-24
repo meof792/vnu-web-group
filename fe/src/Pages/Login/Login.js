@@ -32,7 +32,7 @@ function Login() {
         if (response.data.success) {
           localStorage.setItem("username", email); // Lưu tên người dùng đã đăng nhập toàn cục
           alert("Đăng nhập thành công!");
-          navigate("/table/1");
+          navigate("/home");
         } else {
           if (response.data.type === "tk") {
             setShowName(true);

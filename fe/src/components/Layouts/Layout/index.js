@@ -1,7 +1,7 @@
 import Header from "../../component/Header";
 import Footer from "../../component/Footer";
 import Sidebar from "../../component/Sidebar";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 function Layout({ children }) {
   const navigate = useNavigate();

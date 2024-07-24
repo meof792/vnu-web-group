@@ -1,5 +1,1 @@
-function Print() {
-  return <>Print</>;
-}
-
-export default Print;
+export { default } from "./Print";

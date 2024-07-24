@@ -3,26 +3,50 @@ import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
+import axios from "axios";
+import { useLocation } from "react-router-dom";
+
 import { handleCheckbox } from "./registrationBoardSlice";
 import { reultBoard } from "../../../redux/selector";
 import { registrationBoard } from "../../../redux/selector";
 import { data } from "../../../API/data";
 import { dataUser } from "../../../API/data";
-import axios from "axios";
 
 function RegistrationBoard() {
-  const [data2, setData2] = useState([]);
+  // lấy dữ liệu data
   const [data1, setData1] = useState([]);
+  const [data2, setData2] = useState([]);
+  const [data3, setData3] = useState(data1);
 
-  try {
-    const response = axios.post("http://127.0.0.1:8000/api/subject", {
-      username: localStorage.getItem("username"),
-    });
-    setData2(response.data.subject1);
-    setData1(response.data.subject2);
-  } catch (error) {
-    console.error("Có lỗi xảy ra!", error);
-  }
+  const fetchData = async () => {
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/api/subject", {
+        username: localStorage.getItem("username"),
+      });
+      setData1(response.data.subject1);
+      setData2(response.data.subject2);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Có lỗi xảy ra!", error);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  console.log("data2" + data2);
+  // chuyển đổi data dự theo URL
+  const location = useLocation();
+  useEffect(() => {
+    const currentUrl = location.pathname;
+    const urlSegments = currentUrl.split("/");
+    const lastSegment = urlSegments[urlSegments.length - 1];
+    if (lastSegment === "toantruong") {
+      setData3(data1);
+    } else if (lastSegment === "nganhhoc") {
+      setData3(data2);
+    }
+  }, [location, data1, data2]);
 
   const dispatch = useDispatch();
   const datas = useSelector(registrationBoard);
@@ -75,7 +99,7 @@ function RegistrationBoard() {
   const isDuplicate = (id) => {
     return dataUser.some((item) => item.id === id);
   };
-  console.log(checkedIds + "dữ liệu chuyền đi");
+  // console.log(checkedIds + "dữ liệu chuyền đi");
 
   return (
     <>
@@ -96,9 +120,9 @@ function RegistrationBoard() {
           </thead>
 
           <tbody className="max-h-[300px] overflow-y-auto">
-            {data.map((item) => (
+            {data3.map((item, index) => (
               <tr
-                key={item.id}
+                key={index}
                 className={classNames("h-[25px]", {
                   "bg-green_200 text-white":
                     isIdMatching(item.id) || isDuplicate(item.id),
@@ -140,21 +164,23 @@ function RegistrationBoard() {
                   </div>
                 </td>
                 <td className="text-center border-[1px] h-full">
+                  {item.class}
+                </td>
+                <td className="text-center border-[1px] h-full">{item.name}</td>
+                <td className="text-center border-[1px] h-full">
                   {item.credit}
                 </td>
                 <td className="text-center border-[1px] h-full">
-                  {item.subject}
+                  {item.lectures}
                 </td>
                 <td className="text-center border-[1px] h-full">
-                  {item.class}
+                  {item.total_student}
                 </td>
-                <td className="text-center border-[1px] h-full">
-                  {item.teacher}
-                </td>
-                <td className="text-center border-[1px] h-full">110</td>
                 <td className="text-center border-[1px] h-full">110</td>
                 <td className="text-center border-[1px] h-full">375.000</td>
-                <td className="text-center border-[1px] h-full">{item.late}</td>
+                <td className="text-center border-[1px] h-full">
+                  {item.schedule}
+                </td>
               </tr>
             ))}
           </tbody>

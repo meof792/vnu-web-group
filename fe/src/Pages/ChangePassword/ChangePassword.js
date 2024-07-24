@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import classNames from "classnames";
-import { faLock } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+
 import Header from "../../components/component/Header";
 import Footer from "../../components/component/Footer";
 
 function ChangePassword() {
+  const userPassword = localStorage.getItem("password");
   const [typeCurrentPassword, setTypeCurrentPassword] = useState("password");
   const [typeNewPassword, setTypeNewPassword] = useState("password");
   const [typeRePassword, setTypeRePassword] = useState("password");
@@ -35,12 +37,30 @@ function ChangePassword() {
       return;
     }
     if (newPassword !== rePassword) {
-      setError("Mật khẩu xác nhận không đúng");
+      setError("Mật khẩu nhập lại không chính xác không đúng");
       setShowPassword((prevState) => ({
         ...prevState,
         new: false,
         current: false,
         re: true,
+      }));
+      return;
+    } else if (newPassword.length < 6) {
+      setError("Mật khẩu không đủ 6 kí tự");
+      setShowPassword((prevState) => ({
+        ...prevState,
+        new: true,
+        current: false,
+        re: true,
+      }));
+      return;
+    } else if (currentPassword !== userPassword) {
+      setError("Mật khẩu không chính xác");
+      setShowPassword((prevState) => ({
+        ...prevState,
+        new: false,
+        current: true,
+        re: false,
       }));
       return;
     }

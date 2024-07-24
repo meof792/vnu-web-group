@@ -6,17 +6,20 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { reultBoard } from "../../redux/selector";
 import { dataUser } from "../../redux/selector";
+import { useNavigate } from "react-router-dom";
 
 function Table() {
+  const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [specialized1, setSpecialized1] = useState("Toàn trường");
   const [specialized2, setSpecialized2] = useState("Ngành học");
   const tc = useSelector(reultBoard);
   const [credits, setCredits] = useState(0);
   const dataUsers = useSelector(dataUser);
+
   useEffect(() => {
     setCredits(tc);
-  });
+  }, [tc]);
   const handleMouseEnter = () => {
     setShow(true);
   };
@@ -26,11 +29,17 @@ function Table() {
   };
 
   const handleClick = () => {
-    // Khi click vào ngành 2, đổi vị trí với ngành 1
     const temp = specialized1;
     setSpecialized1(specialized2);
     setSpecialized2(temp);
+
+    if (specialized2 === "Toàn trường") {
+      navigate("/table/toantruong");
+    } else {
+      navigate("/table/nganhhoc");
+    }
   };
+
   return (
     <div>
       <div className="w-full sm:p-10 sm:text-2xl text-[10px]">
@@ -42,7 +51,7 @@ function Table() {
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
-              Ngành {specialized1}{" "}
+              Ngành {specialized1}
               <FontAwesomeIcon className="ml-4 text-3xl" icon={faCaretDown} />
               {show && (
                 <div

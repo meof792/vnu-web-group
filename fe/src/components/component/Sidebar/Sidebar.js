@@ -4,7 +4,6 @@ import { useLocation } from "react-router-dom";
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 import {
-  faCaretRight,
   faDownload,
   faHouse,
   faLock,
@@ -29,8 +28,8 @@ function Sidebar() {
 
     setActiveItem(lastSegment);
     setShowStates(() => ({
-      show: lastSegment === "1" || lastSegment === "2",
-      show2: lastSegment === "print1" || lastSegment === "print2",
+      show: lastSegment === "toantruong",
+      show2: lastSegment === "print",
     }));
   }, [location]);
   const [showStates, setShowStates] = useState({
@@ -68,13 +67,13 @@ function Sidebar() {
             Trang chủ
           </ul>
         </Link>
-        <Link to={"/table/1"}>
+        <Link to={"/table/toantruong"}>
           <ul
             className={classNames(
               " transition-all duration-300 w-full  border-[1px]",
               {
                 "bg-click_sidebar text-green_400":
-                  activeItem === "1" || activeItem === "2",
+                  activeItem === "toantruong" || activeItem === "nganhhoc",
               }
             )}
           >
@@ -92,48 +91,13 @@ function Sidebar() {
             </li>
           </ul>
         </Link>
-        {showStates.show && (
-          <>
-            <Link to={"/table/1"}>
-              <li
-                className={classNames(
-                  "sm:h-[45px] h-[30px]  flex items-center pl-10 border-[1px] bg-[#d3d3d3] text-[#2d2d2d]",
-                  {
-                    "bg-click_sidebar text-green_400": activeItem === "1",
-                  }
-                )}
-              >
-                <FontAwesomeIcon
-                  className=" mr-5 sm:text-3xl text-xl"
-                  icon={faCaretRight}
-                />
-                Ngành 1
-              </li>
-            </Link>
-            <Link to={"/table/2"}>
-              <li
-                className={classNames(
-                  "sm:h-[45px] h-[30px]  flex items-center pl-10 border-[1px] bg-[#d3d3d3] text-[#2d2d2d]",
-                  { "bg-click_sidebar text-green_400": activeItem === "2" }
-                )}
-              >
-                <FontAwesomeIcon
-                  className=" mr-5 sm:text-3xl text-xl"
-                  icon={faCaretRight}
-                />
-                Ngành 2
-              </li>
-            </Link>
-          </>
-        )}
 
-        <Link to={"/print/print1"}>
+        <Link to={"/print"}>
           <ul
             className={classNames(
               "transition-all duration-300 w-full  border-[1px]",
               {
-                "bg-click_sidebar text-green_400":
-                  activeItem === "print1" || activeItem === "print2",
+                "bg-click_sidebar text-green_400": activeItem === "print",
               }
             )}
           >
@@ -149,56 +113,25 @@ function Sidebar() {
             </li>
           </ul>
         </Link>
-        {showStates.show2 && (
-          <>
-            <Link to={"/print/print1"}>
-              <li
-                className={classNames(
-                  "sm:h-[45px] h-[30px]  flex items-center pl-10 border-[1px] bg-[#d3d3d3] text-[#2d2d2d]",
-                  {
-                    "bg-click_sidebar text-green_400": activeItem === "print1",
-                  }
-                )}
-              >
-                <FontAwesomeIcon
-                  className=" mr-5 sm:text-3xl text-xl"
-                  icon={faCaretRight}
-                />
-                In ra môn ngành 1
-              </li>
-            </Link>
-            <Link to={"/print/print2"}>
-              <li
-                className={classNames(
-                  "sm:h-[45px] h-[30px]  flex items-center pl-10 border-[1px] bg-[#d3d3d3] text-[#2d2d2d]",
-                  {
-                    "bg-click_sidebar text-green_400": activeItem === "print2",
-                  }
-                )}
-              >
-                <FontAwesomeIcon
-                  className=" mr-5 sm:text-3xl text-xl"
-                  icon={faCaretRight}
-                />
-                In ra môn ngành 2
-              </li>
-            </Link>
-          </>
-        )}
+
         <span
           onMouseEnter={() => setShowTK(true)}
           onMouseLeave={() => setShowTK(false)}
         >
-          <ul className=" relative w-full flex flex-col items-center px-5 bg-green_400  py-3 text-white border-[1px]">
-            <li className="py-1">MSV : {userName}</li>
-            <FontAwesomeIcon
-              className="absolute left-7 top-10 sm:text-3xl text-xl"
-              icon={faUser}
-            />
+          <ul className=" relative w-full flex  items-center px-5 bg-green_400  py-3 text-white border-[1px]">
+            <li className="py-1">
+              {" "}
+              <FontAwesomeIcon
+                className=" left-7 sm:text-3xl text-xl mr-5"
+                icon={faUser}
+              />{" "}
+              <span> MSV : </span>
+              {userName}
+            </li>
           </ul>
 
           {showTK && (
-            <ul className="transition transition-all duration-300">
+            <ul className=" transition-all duration-300">
               <li
                 onClick={() => logout()}
                 className="bg-green_400 h-[40px] flex items-center pl-5  text-white border-[1px]"

@@ -6,23 +6,29 @@ import { registrationBoard } from "../../../redux/selector";
 import { useDispatch } from "react-redux";
 import { removeItem } from "../registrationBoard/registrationBoardSlice";
 import { tc } from "./ReultBoardSlice";
-import { dataUser } from "../../../API/data";
+// import { dataUser } from "../../../API/data";
 
 function ResultBoard() {
   const data = useSelector(registrationBoard);
   const dispatch = useDispatch();
 
   const handleRemove = (index) => {
-    dispatch(removeItem(index - dataUser.length));
+    dispatch(removeItem(index));
   };
 
   // Sử dụng useMemo để tính toán tổng tín chỉ chỉ khi data hoặc dataUser thay đổi
-  const dataUsersS = useMemo(() => [...dataUser, ...data], [dataUser, data]);
+  // const dataUsersS = useMemo(() => [...dataUser, ...data], [dataUser, data]);
+
+  const dataUsersS = useMemo(() => {
+    const uniqueClasses = new Map();
+    data.forEach((item) => uniqueClasses.set(item.class, item));
+    return Array.from(uniqueClasses.values());
+  }, [data]);
 
   // Tính toán tổng tín chỉ chỉ khi dataUsersS thay đổi
   const totalCredits = useMemo(() => {
     return dataUsersS.reduce((sum, item) => {
-      const credits = +item.class; // Chuyển đổi từ string thành số
+      const credits = +item.credit; // Chuyển đổi từ string thành số
       return sum + (isNaN(credits) ? 0 : credits);
     }, 0);
   }, [dataUsersS]);
@@ -57,21 +63,21 @@ function ResultBoard() {
                   {index + 1}
                 </td>
                 <td className="text-center  border-[1px]  h-full">
-                  {item.credit}
-                </td>
-                <td className="text-center  border-[1px]  h-full">
-                  {item.subject}
-                </td>
-                <td className="text-center  border-[1px]  h-full">
                   {item.class}
                 </td>
                 <td className="text-center  border-[1px]  h-full">
-                  {item.teacher}
+                  {item.credit}
+                </td>
+                <td className="text-center  border-[1px]  h-full">
+                  {item.name}
+                </td>
+                <td className="text-center  border-[1px]  h-full">
+                  {item.lectures}
                 </td>
 
                 <td className="text-center  border-[1px]  h-full">375.000</td>
                 <td className="text-center  border-[1px]  h-full">
-                  {item.late}
+                  {item.schedule}
                 </td>
                 <td
                   onClick={() => handleRemove(index)}

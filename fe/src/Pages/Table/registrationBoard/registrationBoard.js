@@ -34,7 +34,6 @@ function RegistrationBoard() {
     fetchData();
   }, []);
 
-  console.log("data2" + data2);
   // chuyển đổi data dự theo URL
   const location = useLocation();
   useEffect(() => {
@@ -73,7 +72,7 @@ function RegistrationBoard() {
           : [...prevCheckedIds, id];
 
         // Lấy danh sách các mục đã chọn
-        const checkedData = data.filter((item) =>
+        const checkedData = data3.filter((item) =>
           newCheckedIds.includes(item.id)
         );
 

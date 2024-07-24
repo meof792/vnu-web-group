@@ -36,7 +36,7 @@ class WebController extends Controller
             }
         });
 
-        return response()->json(['subject1' => $subject1, 'subject2' => $subject2]);
+        return response()->json(['subject1' => $subject1, 'subject2' => $subject2, 'major' => $user->major]);
     }
     public function create()
     {

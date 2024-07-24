@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
 
 import { handleCheckbox } from "./registrationBoardSlice";
 import { reultBoard } from "../../../redux/selector";
@@ -13,40 +12,28 @@ import { data } from "../../../API/data";
 import { dataUser } from "../../../API/data";
 
 function RegistrationBoard() {
-  // lấy dữ liệu data
+  // lấy dữ liệu từ API
   const [data1, setData1] = useState([]);
   const [data2, setData2] = useState([]);
-  const [data3, setData3] = useState(data1);
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.post("http://127.0.0.1:8000/api/subject", {
-        username: localStorage.getItem("username"),
-      });
-      setData1(response.data.subject1);
-      setData2(response.data.subject2);
-      console.log(response.data);
-    } catch (error) {
-      console.error("Có lỗi xảy ra!", error);
-    }
-  };
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post("http://127.0.0.1:8000/api/subject", {
+          username: localStorage.getItem("username"),
+        });
+        setData1(response.data.subject1);
+        setData2(response.data.subject2);
+      } catch (error) {
+        console.error("Có lỗi xảy ra!", error);
+      }
+    };
+
     fetchData();
   }, []);
+  console.log(data1);
 
-  // chuyển đổi data dự theo URL
-  const location = useLocation();
-  useEffect(() => {
-    const currentUrl = location.pathname;
-    const urlSegments = currentUrl.split("/");
-    const lastSegment = urlSegments[urlSegments.length - 1];
-    if (lastSegment === "toantruong") {
-      setData3(data1);
-    } else if (lastSegment === "nganhhoc") {
-      setData3(data2);
-    }
-  }, [location, data1, data2]);
-
+  // xử lí logic
   const dispatch = useDispatch();
   const datas = useSelector(registrationBoard);
   const reult = useSelector(reultBoard);
@@ -56,7 +43,7 @@ function RegistrationBoard() {
 
   // cập nhập checkbox
   useEffect(() => {
-    const dataUpdate = datas.map((item) => item.id);
+    const dataUpdate = datas.map((item) => item.credit.trim());
     if (checkedIds.length !== dataUpdate.length) {
       setCheckedIds(dataUpdate);
     }
@@ -64,16 +51,16 @@ function RegistrationBoard() {
 
   // Hàm xử lý thay đổi checkbox
   const handleCheckboxChange = useCallback(
-    (id) => {
+    (credit) => {
       setCheckedIds((prevCheckedIds) => {
-        const isChecked = prevCheckedIds.includes(id);
+        const isChecked = prevCheckedIds.includes(credit);
         const newCheckedIds = isChecked
-          ? prevCheckedIds.filter((checkedId) => checkedId !== id)
-          : [...prevCheckedIds, id];
+          ? prevCheckedIds.filter((checkedId) => checkedId !== credit)
+          : [...prevCheckedIds, credit];
 
         // Lấy danh sách các mục đã chọn
-        const checkedData = data3.filter((item) =>
-          newCheckedIds.includes(item.id)
+        const checkedData = data.filter((item) =>
+          newCheckedIds.includes(item.credit.trim())
         );
 
         // Kiểm tra và dispatch hành động nếu cần thiết
@@ -83,8 +70,9 @@ function RegistrationBoard() {
         ) {
           dispatch(handleCheckbox(checkedData));
         } else {
-          alert("quá khố tín quy định");
+          alert("Số môn đặt hơn 10. Vui lý những môn khác");
         }
+        console.log(checkedData + " : dữ liệu chuyển đi");
 
         return newCheckedIds;
       });
@@ -93,12 +81,12 @@ function RegistrationBoard() {
   );
   // Hàm kiểm tra xem id có trong datas không
   const isIdMatching = (id) => {
-    return datas.some((ds) => ds.id === id);
+    return datas.some((ds) => ds.credit.trim() === id);
   };
   const isDuplicate = (id) => {
-    return dataUser.some((item) => item.id === id);
+    return dataUser.some((item) => item.credit.trim() === id);
   };
-  // console.log(checkedIds + "dữ liệu chuyền đi");
+  console.log(checkedIds + " : dữ liệu chuyền đi");
 
   return (
     <>
@@ -119,34 +107,39 @@ function RegistrationBoard() {
           </thead>
 
           <tbody className="max-h-[300px] overflow-y-auto">
-            {data3.map((item, index) => (
+            {data.map((item) => (
               <tr
-                key={index}
+                key={item.credit.trim()}
                 className={classNames("h-[25px]", {
                   "bg-green_200 text-white":
-                    isIdMatching(item.id) || isDuplicate(item.id),
+                    isIdMatching(item.credit.trim()) ||
+                    isDuplicate(item.credit.trim()),
                 })}
               >
                 <td className="relative text-center flex h-[25px] border-[1px]">
                   <input
                     className="z-10 w-full h-[100%] checkbox opacity-0"
                     type="checkbox"
-                    disabled={isIdMatching(item.id) || isDuplicate(item.id)}
-                    checked={checkedIds.includes(item.id)}
-                    value={item.id}
-                    onChange={() => handleCheckboxChange(item.id)}
+                    disabled={
+                      isIdMatching(item.credit.trim()) ||
+                      isDuplicate(item.credit.trim())
+                    }
+                    checked={checkedIds.includes(item.credit.trim())}
+                    value={item.credit.trim()}
+                    onChange={() => handleCheckboxChange(item.credit.trim())}
                   />
                   <div
                     className={classNames(
                       "absolute w-full h-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center border-none",
                       {
                         "bg-green_200":
-                          isIdMatching(item.id) || isDuplicate(item.id),
+                          isIdMatching(item.credit.trim()) ||
+                          isDuplicate(item.credit.trim()),
                       }
                     )}
                   >
                     {" "}
-                    {isDuplicate(item.id) && (
+                    {isDuplicate(item.credit.trim()) && (
                       <span className="font-bold text-[red] ">
                         <FontAwesomeIcon
                           icon={faCheck}
@@ -154,7 +147,7 @@ function RegistrationBoard() {
                         />
                       </span>
                     )}
-                    {isIdMatching(item.id) ? (
+                    {isIdMatching(item.credit.trim()) ? (
                       <FontAwesomeIcon
                         icon={faCheck}
                         className="text-4xl text-white"
@@ -163,23 +156,21 @@ function RegistrationBoard() {
                   </div>
                 </td>
                 <td className="text-center border-[1px] h-full">
-                  {item.class}
-                </td>
-                <td className="text-center border-[1px] h-full">{item.name}</td>
-                <td className="text-center border-[1px] h-full">
                   {item.credit}
                 </td>
                 <td className="text-center border-[1px] h-full">
-                  {item.lectures}
+                  {item.subject}
                 </td>
                 <td className="text-center border-[1px] h-full">
-                  {item.total_student}
+                  {item.class}
+                </td>
+                <td className="text-center border-[1px] h-full">
+                  {item.teacher}
                 </td>
                 <td className="text-center border-[1px] h-full">110</td>
+                <td className="text-center border-[1px] h-full">110</td>
                 <td className="text-center border-[1px] h-full">375.000</td>
-                <td className="text-center border-[1px] h-full">
-                  {item.schedule}
-                </td>
+                <td className="text-center border-[1px] h-full">{item.late}</td>
               </tr>
             ))}
           </tbody>
